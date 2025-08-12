@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+motor
+pydantic
+textblob
+python-multipart  # for file uploads if needed later
+python-dotenv
+pyjwt
+httpsx

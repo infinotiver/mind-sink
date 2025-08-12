@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "install-backend-dependencies",
+      "command": "pip",
+      "args": ["install", "-r", "backend/requirements.txt"],
+      "problemMatcher": []
+    }
+  ]
+}
