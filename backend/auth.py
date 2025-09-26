@@ -19,7 +19,7 @@ DISCORD_CLIENT_SECRET = config("DISCORD_CLIENT_SECRET", cast=str)
 DISCORD_REDIRECT_URI = config("DISCORD_REDIRECT_URI", cast=str)
 SECRET_KEY = config("JWT_SECRET", cast=str, default="mind-sink-secret")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 day
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 3  # 3 day
 
 DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token"
 DISCORD_USER_API = "https://discord.com/api/users/@me"
@@ -54,7 +54,7 @@ async def auth_callback(request: Request):
     if not code:
         raise HTTPException(status_code=400, detail="Missing code")
 
-    print(f"Received code: {code}")  # Debugging
+    # print(f"Received code: {code}")  # Debugging
 
     async with httpx.AsyncClient() as client:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
@@ -86,7 +86,7 @@ async def auth_callback(request: Request):
         username = user_data["username"]
 
         user = await get_or_create_user(user_id, username)
-        print(f"User record: {user}")  # Debugging
+        # print(f"User record: {user}")  # Debugging
 
         jwt_payload = {
             "sub": user_id,
