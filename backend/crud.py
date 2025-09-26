@@ -56,10 +56,10 @@ async def create_item(item: ItemCreate, user_id: str) -> ItemModel:
         def generate_tags(content: str, item_type: str) -> List[str]:
             tags = []
             if item_type == "text":
-                print(f"Generating tags for text content: {content}")
+                # print(f"Generating tags for text content: {content}")
                 blob = TextBlob(content)
                 tags = list(set(blob.noun_phrases))
-                print(f"Generated tags: {tags}")
+                # print(f"Generated tags: {tags}")
             return tags
 
         tags = generate_tags(item.content, item.type)
@@ -73,11 +73,25 @@ async def create_item(item: ItemCreate, user_id: str) -> ItemModel:
         raise ValueError("Sink does not belong to the user.")
 
 
-async def get_items_by_board(sink_id: str, user_id: str) -> List[ItemModel]:
+async def get_items_by_board(sink_id: str) -> List[ItemModel]:
     items = []
     async for item in items_collection.find(
-        {"sink_id": ObjectId(sink_id), "user_id": user_id}
+        {"sink_id": ObjectId(sink_id)}
     ):
+        items.append(ItemModel(**item))
+    return items
+
+
+async def get_items_by_user(user_id: str) -> List[ItemModel]:
+    items = []
+    async for item in items_collection.find({"user_id": user_id}):
+        items.append(ItemModel(**item))
+    return items
+
+
+async def get_all_items() -> List[ItemModel]:
+    items = []
+    async for item in items_collection.find():
         items.append(ItemModel(**item))
     return items
 
