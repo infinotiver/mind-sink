@@ -3,7 +3,7 @@ import { useState } from "react";
 import ImagePreview from "@/components/itemview/ImagePreview";
 import ItemDetails from "@/components/itemview/ItemDetails";
 
-function ItemView() {
+function ItemViewPage() {
   const { itemID } = useParams();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -34,4 +34,4 @@ function ItemView() {
   );
 }
 
-export default ItemView;
+export default ItemViewPage;

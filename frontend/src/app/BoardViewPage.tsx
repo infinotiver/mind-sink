@@ -1,4 +1,4 @@
-export default function BoardView() {
+export default function BoardViewPage() {
   return (
     <>
       <div>BoardView</div>

@@ -2,6 +2,7 @@ import TagsInput from "@/components/common/TagsInput";
 import { Button } from "@/components/ui/button";
 import type { JSX } from "react/jsx-runtime";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 
 function ItemCreate({
   selectedTags,
@@ -23,7 +24,8 @@ function ItemCreate({
   handleDeleteTag: (tag: string) => void;
   handleUpdateLink: (link: string) => void;
   handleUpdateSource: (link: string) => void;
-}) {
+}): JSX.Element {
+  const [selectedBoard, setSelectedBoard] = useState<string | null>(null);
   return (
     <div className="w-auto flex-1 flex flex-col p-4">
       <div className="mb-4">
@@ -57,17 +59,17 @@ function ItemCreate({
               id="sinkDropdown"
               className="my-2 block w-auto rounded-md border border-input bg-accent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              Select Board
+              {selectedBoard || "Select Board"}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => console.log("Board 1 selected")}>
+            <DropdownMenuItem onClick={() => setSelectedBoard("Board 1")}>
               Board 1
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Board 2 selected")}>
+            <DropdownMenuItem onClick={() => setSelectedBoard("Board 2")}>
               Board 2
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Board 3 selected")}>
+            <DropdownMenuItem onClick={() => setSelectedBoard("Board 3")}>
               Board 3
             </DropdownMenuItem>
           </DropdownMenuContent>

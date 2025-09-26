@@ -2,8 +2,9 @@ import { useRef, useLayoutEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/common/navbar";
 import { Button } from "@/components/ui/button";
-import DevStatePanel from "@/components/common/DevStatsPanel";
+// import DevStatePanel from "@/components/common/DevStatsPanel";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const scrollRef = useRef(null);
@@ -57,9 +58,11 @@ export default function HomePage() {
             so you focus on what matters
           </div>
           <div className="mt-8 flex flex-wrap space-x-4 w-full justify-center">
-            <Button variant="default" size="lg" className="min-w-[20vw]">
-              Get Started
-            </Button>
+            <Link to={"/dashboard"}>
+              <Button variant="default" size="lg" className="min-w-[20vw]">
+                Get Started
+              </Button>
+            </Link>
             <Button variant="outline" size="lg">
               Learn More
             </Button>

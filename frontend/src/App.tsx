@@ -1,15 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./components/theme-provider";
-import LoginPage from "./app/Login";
+import LoginPage from "./app/LoginPage";
 import HomePage from "./app/HomePage";
 import DashboardLayout from "./layouts/DashboardLayout";
-import DashboardHomePage from "./app/Dashboard";
-import BoardView from "./app/BoardView";
-import CreateBoard from "./app/CreateBoard";
-import ItemView from "./app/ItemView";
+import DashboardHomePage from "./app/DashboardPage";
+import BoardViewPage from "./app/BoardViewPage";
+import CreateBoardPage from "./app/CreateBoardPage";
+import ItemViewPage from "./app/ItemViewPage";
 import ProfilePage from "./app/ProfilePage";
 import AddItemPage from "./app/AddItemPage";
-import { fetchData } from "./utils/apiHandler"; // Import API handler
 
 function App() {
   const router = createBrowserRouter([
@@ -27,9 +26,9 @@ function App() {
       element: <DashboardLayout />,
       children: [
         { index: true, element: <DashboardHomePage /> },
-        { path: "sink/:sinkID", element: <BoardView /> },
-        { path: "create-sink", element: <CreateBoard /> },
-        { path: "items/:itemID", element: <ItemView /> },
+        { path: "sink/:sinkID", element: <BoardViewPage /> },
+        { path: "create-sink", element: <CreateBoardPage /> },
+        { path: "items/:itemID", element: <ItemViewPage /> },
         { path: "all", element: <DashboardHomePage /> }, // Placeholder for "View Sinks"
         { path: "favourites", element: <DashboardHomePage /> }, // Placeholder for "Favourites"
         { path: "add-item", element: <AddItemPage /> }, // Placeholder for "Add Image"
@@ -42,11 +41,6 @@ function App() {
     },
   ]);
 
-  // Example usage of fetchData
-  async function loadDashboardData() {
-    const data = await fetchData("/api/dashboard");
-    console.log("Dashboard Data:", data);
-  }
 
   return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
