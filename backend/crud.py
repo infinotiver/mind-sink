@@ -1,4 +1,4 @@
-from .database import boards_collection, items_collection
+from .database import boards_collection, items_collection, users_collection
 from .models import SinkModel, SinkCreate, ItemCreate, ItemModel
 from bson import ObjectId
 from typing import List
@@ -82,9 +82,22 @@ async def get_items_by_board(sink_id: str) -> List[ItemModel]:
     return items
 
 
+
 async def get_items_by_user(user_id: str) -> List[ItemModel]:
+    # 1) pull down just the _ids of boards this user owns
+    board_cursor = boards_collection.find(
+      {"user_id": user_id},
+      {"_id": 1}
+    )
+    board_ids = [doc["_id"] async for doc in board_cursor]
+    if not board_ids:
+        return []
+
+    # 2) fetch all items whose sink_id is in that list
     items = []
-    async for item in items_collection.find({"user_id": user_id}):
+    async for item in items_collection.find({
+      "sink_id": {"$in": board_ids}
+    }):
         items.append(ItemModel(**item))
     return items
 
@@ -146,3 +159,13 @@ async def update_item(item_id: str, user_id: str, update_data: dict) -> ItemMode
         {"_id": ObjectId(item_id), "user_id": user_id}
     )
     return ItemModel(**updated_item)
+
+async def get_user(discord_id: str) -> dict:
+    user = await users_collection.find_one({"user_id": str(discord_id)})
+    if not user:
+        # print(f"No user found with discord_id: {discord_id}")  # Debug statement
+        raise ValueError("User not found.")
+    user["id"] = str(user["_id"])
+    del user["_id"]
+    # print(f"User fetched successfully: {user}")  # Debug statement
+    return user
