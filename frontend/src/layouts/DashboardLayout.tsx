@@ -7,18 +7,20 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router-dom";
+import { useAuth } from "@/context/AuthProvider"; 
 
 export default function DashboardLayout() {
+  const {user} = useAuth();
   return (
     <>
       <SidebarProvider>
         <AppSidebar
           data={{
             user: {
-              id: 124124,
-              name: "Some Guy",
-              email: "randomguy@homeless",
-              avatar: "https://example.com/g.png",
+              id: user?.user_id || 10000,
+              name: user?.username || "Unknown User",
+              email: user ? "Discord Login" : "Unknown login method",
+              avatar: user?.avatar_url || "",
             },
             projects: [
               { name: "Blue Board", url: "/dashboard/sink/1" },

@@ -9,8 +9,12 @@ import CreateBoardPage from "./app/CreateBoardPage";
 import ItemViewPage from "./app/ItemViewPage";
 import ProfilePage from "./app/ProfilePage";
 import AddItemPage from "./app/AddItemPage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./context/AuthProvider";
+import AuthCallbackPage from "./app/AuthCallbackPage";
 
 function App() {
+  const queryClient = new QueryClient();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -20,6 +24,10 @@ function App() {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/auth/callback",
+      element: <AuthCallbackPage/>,  
     },
     {
       path: "/dashboard",
@@ -41,12 +49,14 @@ function App() {
     },
   ]);
 
-
   return (
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
-      </ThemeProvider>
-
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
