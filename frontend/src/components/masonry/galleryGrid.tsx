@@ -1,20 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
+import { getUserItems } from "@/api/items";
+import type { Item } from "@/api/items";
 import GalleryItem from "./galleryItem";
-
-interface ImageProps {
-  id: number;
-  name: string;
-  source: string;
-}
-
-const images: ImageProps[] = [
-  { id: 1, name: "Image 1", source: "/pins/1.png" },
-  { id: 2, name: "Image 2", source: "/pins/2.png" },
-  { id: 3, name: "Image 3", source: "/pins/3.png" },
-  { id: 4, name: "Image 4", source: "/pins/4.png" },
-  { id: 5, name: "Image 5", source: "/pins/5.png" },
-];
+import { useAuth } from "@/context/AuthProvider";
 
 function GalleryGrid() {
+  const { user } = useAuth();
+  const {
+    data: items = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["items", user?.user_id],
+    queryFn: () =>
+      user?.user_id
+        ? getUserItems(user.user_id)
+        : Promise.reject("User ID is missing"),
+  });
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return `<p>Failed to load items. ${error}</p>`;
   return (
     <div
       className="
@@ -25,8 +29,15 @@ function GalleryGrid() {
         space-y-4
       "
     >
-      {images.map((image) => (
-        <GalleryItem key={image.id} index={image.id} path={image.source} name={image.name} />
+      {items.map((image: Item) => (
+        <GalleryItem
+          key={image.id}
+          author={user ? user?.username : ""}
+          path={image.content}
+          name={image.id}
+          index={image.id}
+          sinkName={image.sink_id}
+        />
       ))}
     </div>
   );

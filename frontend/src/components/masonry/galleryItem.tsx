@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { FiExternalLink, FiUser } from "react-icons/fi";
+
 interface GalleryItemProps {
-  index: number;
+  index: string | number;
+  author: string;
   path: string;
   name: string;
   sinkName?: string;
@@ -11,6 +13,7 @@ interface GalleryItemProps {
 
 export default function GalleryItem({
   index,
+  author,
   path,
   name,
   sinkName = "Unable to fetch",
@@ -39,7 +42,9 @@ export default function GalleryItem({
           {sinkName && (
             <p className="text-sm text-foreground mb-2 ml-2">{sinkName}</p>
           )}
-          <p className="text-sm flex gap-1 items-center justify-center text-foreground mb-2 ml-2"><FiUser/> Author</p>
+          <p className="text-sm flex gap-1 items-center justify-center text-foreground mb-2 ml-2">
+            <FiUser />{author}
+          </p>
           {tags && (
             <div className="flex flex-wrap justify-end gap-2">
               {tags.map((tag, idx) => (
