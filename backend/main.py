@@ -14,6 +14,7 @@ from .crud import (
     delete_item,
     update_item,
     update_sink,
+    get_user
 )
 from .auth import *
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -75,19 +76,22 @@ async def api_delete_board(board_id: str, user_id: str = Depends(get_current_use
     await delete_board(board_id, user_id)
     return {"message": "Board deleted"}
 
+@app.post("/items", response_model=ItemModel)
+async def api_create_item(
+    item: ItemCreate, user_id: str = Depends(get_current_user_id)
+):
+    return await create_item(item, user_id)
 
-
-
-@app.get("/items/by-sink/{sink_id}", response_model=List[ItemModel])
+@app.get("/items/sink/{sink_id}", response_model=List[ItemModel])
 async def api_get_items_by_sink(
     sink_id: str, user_id: str = Depends(get_current_user_id)
 ):
     return await get_items_by_board(sink_id, user_id)
 
 
-@app.get("/items/by-user", response_model=List[ItemModel])
-async def api_get_items_by_user(user_id: str = Depends(get_current_user_id)):
-    return await get_items_by_user(user_id)
+@app.get("/items/user", response_model=List[ItemModel])
+async def api_get_items_by_user(auth_user_id: str, user_id:str= Depends(get_current_user_id)):
+    return await get_items_by_user(auth_user_id)
 
 
 @app.get("/items", response_model=List[ItemModel])
@@ -130,5 +134,25 @@ async def api_update_sink(
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+
+@app.get("/users/{discord_id}", response_model=dict)
+async def api_get_user(discord_id: str):
+    try:
+        user = await get_user(discord_id)
+        return user
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    
+@app.get("/me", response_model=dict)
+async def get_me(current_user_id: str = Depends(get_current_user_id)):
+    try:
+        user = await get_user(current_user_id)
+        return user
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 app.include_router(router)
