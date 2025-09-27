@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem("token");
     console.debug("Token removed from localStorage");
     queryClient.clear(); // clear cached queries on logout
-    console.debug("Query cache cleared");
+    console.debug("Query cache cleared");  
   };
 
   return (
