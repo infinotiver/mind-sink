@@ -137,6 +137,7 @@ class UserModel(BaseModel):
     discord_id: str  # From OAuth2
     username: str
     avatar_url: Optional[str] = None
+    email: str
 
     model_config = ConfigDict(populate_by_name=True, json_encoders={ObjectId: str})
 
@@ -146,14 +147,28 @@ class UserModel(BaseModel):
             raise ValueError("Field cannot be empty")
         return v
 
+    @field_validator("email")
+    def validate_email(cls, v):
+        if v and "@" not in v:
+            raise ValueError("Invalid email format")
+        return v
+
 
 class UserCreate(BaseModel):
     discord_id: str
     username: str
     avatar_url: Optional[str] = None
+    email: str
 
     @field_validator("discord_id", "username")
     def not_empty(cls, v):
         if not v.strip():
             raise ValueError("Field cannot be empty")
         return v
+    
+    @field_validator("email")     
+    def validate_email(cls, v):
+        if v and "@" not in v:
+            raise ValueError("Invalid email format")
+        return v
+

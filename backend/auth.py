@@ -10,6 +10,8 @@ from typing import Optional
 from . import crud
 from .database import users_collection
 
+from fastapi.responses import RedirectResponse
+
 router = APIRouter()
 
 config = Config("backend/.env")
@@ -25,12 +27,23 @@ DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token"
 DISCORD_USER_API = "https://discord.com/api/users/@me"
 
 
-async def get_or_create_user(user_id: str, username: str) -> dict:
+def build_avatar_url(user_id: str, avatar: str) -> str:
+    """Generate the avatar URL for a Discord user."""
+    return f"https://cdn.discordapp.com/avatars/{user_id}/{avatar}.jpg"
+
+
+async def get_or_create_user(user_id: str, username: str, avatar_url: str, email: str) -> dict:
     user = await users_collection.find_one({"user_id": user_id})
     if user:
         return user
 
-    new_user = {"user_id": user_id, "username": username, "created_at": datetime.now()}
+    new_user = {
+        "user_id": user_id,
+        "username": username,
+        "avatar_url": avatar_url,
+        "email": email,
+        "created_at": datetime.now(),
+    }
     result = await users_collection.insert_one(new_user)
     new_user["_id"] = result.inserted_id
     return new_user
@@ -54,8 +67,6 @@ async def auth_callback(request: Request):
     if not code:
         raise HTTPException(status_code=400, detail="Missing code")
 
-    # print(f"Received code: {code}")  # Debugging
-
     async with httpx.AsyncClient() as client:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         data = {
@@ -76,17 +87,15 @@ async def auth_callback(request: Request):
         user_resp = await client.get(
             DISCORD_USER_API, headers={"Authorization": f"Bearer {access_token}"}
         )
-
-        if user_resp.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to fetch user data")
-
         user_data = user_resp.json()
-
         user_id = user_data["id"]
         username = user_data["username"]
+        avatar = user_data.get("avatar", "")
+        email = user_data.get("email", "")
 
-        user = await get_or_create_user(user_id, username)
-        # print(f"User record: {user}")  # Debugging
+        avatar_url = build_avatar_url(user_id, avatar)
+
+        await get_or_create_user(user_id, username, avatar_url, email)
 
         jwt_payload = {
             "sub": user_id,
@@ -94,7 +103,9 @@ async def auth_callback(request: Request):
         }
         token = jwt.encode(jwt_payload, SECRET_KEY, algorithm=ALGORITHM)
 
-        return {"access_token": token, "token_type": "bearer"}
+        # ✅ redirect to frontend with token
+        frontend_url = f"http://localhost:5173/auth/callback?token={token}"
+        return RedirectResponse(url=frontend_url)
 
 
 def verify_jwt(token: str) -> Optional[str]:
