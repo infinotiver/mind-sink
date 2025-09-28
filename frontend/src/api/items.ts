@@ -50,3 +50,12 @@ export function useDeleteItem(onSuccess?: () => void) {
     onSuccess,
   });
 }
+// CREATE ITEM
+export function useCreateItem() {
+  return useMutation({
+    mutationFn: async (data: Omit<Item, "_id">) => {
+      const res = await apiClient.post(`/items`, data);
+      return res.data;
+    },
+  });
+}
