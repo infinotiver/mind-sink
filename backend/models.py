@@ -11,7 +11,7 @@ from pydantic_core import CoreSchema
 from typing import Optional, List, Any
 from bson import ObjectId
 from bson.errors import InvalidId
-
+from datetime import datetime
 
 def validate_object_id(id_str: str):
     try:
@@ -43,7 +43,7 @@ class SinkModel(BaseModel):
     title: str
     description: Optional[str] = None
     user_id: str  # Discord user ID
-    created_at: Optional[str] = None
+    created_at: Optional[datetime] = Field(default_factory=datetime.utcnow)
     visibility: Optional[str] = Field(default="private")  # public, private
     tags: Optional[List[str]] = []
     model_config = ConfigDict(validate_by_name=True)
