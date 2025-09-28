@@ -16,6 +16,13 @@ export async function getUserItems(userId: string) {
   console.log(res.data);
   return res.data;
 }
+//  ITEMS BY SINK
+
+export async function getItemsBySink(sinkId: string) {
+  const res = await apiClient.get(`/items/sink/${sinkId}`);
+  console.log(res.data);
+  return res.data;
+}
 
 // GET ITEM
 
