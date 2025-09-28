@@ -19,7 +19,7 @@ export async function getUserItems(userId: string) {
 //  ITEMS BY SINK
 
 export async function getItemsBySink(sinkId: string) {
-  const res = await apiClient.get(`/items/sink/${sinkId}`);
+  const res = await apiClient.get(`/sinks/${sinkId}/items`);
   console.log(res.data);
   return res.data;
 }

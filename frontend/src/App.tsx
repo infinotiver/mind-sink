@@ -12,6 +12,7 @@ import AddItemPage from "./app/AddItemPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthProvider";
 import AuthCallbackPage from "./app/AuthCallbackPage";
+import ViewSinksPage from "./app/ViewSinksPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -37,7 +38,7 @@ function App() {
         { path: "sink/:sinkID", element: <BoardViewPage /> },
         { path: "create-sink", element: <CreateBoardPage /> },
         { path: "items/:itemID", element: <ItemViewPage /> },
-        { path: "all", element: <DashboardHomePage /> }, // Placeholder for "View Sinks"
+        { path: "all", element: <ViewSinksPage /> }, // Placeholder for "View Sinks"
         { path: "favourites", element: <DashboardHomePage /> }, // Placeholder for "Favourites"
         { path: "add-item", element: <AddItemPage /> }, // Placeholder for "Add Image"
       ],

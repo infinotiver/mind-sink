@@ -13,6 +13,7 @@ export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
   const {
     data: sink,
     isLoading: isSinkLoading,
@@ -34,6 +35,7 @@ export default function BoardViewPage() {
       sinkID ? getItemsBySink(sinkID) : Promise.reject("Items not found"),
     enabled: !!sinkID,
   });
+
   const { data: userData, error: userError } = useQuery({
     queryKey: ["users", sink?.user_id],
     queryFn: () =>
@@ -42,7 +44,20 @@ export default function BoardViewPage() {
   });
 
   if (isSinkLoading || areItemsLoading) return <div>Loading...</div>;
-  if (itemsError || sinkError || userError) return <p>Failed to load item.</p>;
+
+  if (sinkError || itemsError || userError) {
+    return (
+      <div className="p-4 bg-red-100 text-red-800 rounded-md">
+        <h2 className="text-lg font-bold">Error</h2>
+        <ul className="list-disc pl-5">
+          {sinkError && <li>Failed to load sink: {sinkError.message || sinkError}</li>}
+          {itemsError && <li>Failed to load items: {itemsError.message || itemsError}</li>}
+          {userError && <li>Failed to load user profile: {userError.message || userError}</li>}
+        </ul>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex flex-col gap-2 p-4 bg-background rounded-md shadow-md mb-4">
@@ -80,7 +95,7 @@ export default function BoardViewPage() {
                 deleteSink(sink ? sink._id : "");
                 queryClient.invalidateQueries();
                 alert("Sink deleted successfully");
-                navigate("/dashboard")
+                navigate("/dashboard");
               }}
             >
               Delete Sink
