@@ -9,6 +9,7 @@ from .crud import (
     delete_board,
     create_item,
     get_items_by_board,
+    get_item_by_id,
     get_items_by_user,
     get_all_items,
     delete_item,
@@ -76,6 +77,10 @@ async def api_delete_board(board_id: str, user_id: str = Depends(get_current_use
     await delete_board(board_id, user_id)
     return {"message": "Board deleted"}
 
+@app.get("/sinks/{board_id}/items", response_model=List[ItemModel])
+async def api_get_items(board_id: str, user_id: str = Depends(get_current_user_id)):
+    return await get_items_by_board(board_id, user_id)
+
 @app.post("/items", response_model=ItemModel)
 async def api_create_item(
     item: ItemCreate, user_id: str = Depends(get_current_user_id)
@@ -98,10 +103,11 @@ async def api_get_items_by_user(auth_user_id: str, user_id:str= Depends(get_curr
 async def api_get_all_items():
     return await get_all_items()
 
-@app.get("/sinks/{board_id}/items", response_model=List[ItemModel])
-async def api_get_items(board_id: str, user_id: str = Depends(get_current_user_id)):
-    return await get_items_by_board(board_id, user_id)
-
+@app.get("/items/item/{item_id}", response_model=ItemModel)
+async def api_get_items_by_sink(
+    item_id: str, user_id: str = Depends(get_current_user_id)
+):
+    return await get_item_by_id(item_id)
 
 @app.delete("/items/{item_id}")
 async def api_delete_item(item_id: str, user_id: str = Depends(get_current_user_id)):

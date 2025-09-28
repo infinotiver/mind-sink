@@ -72,7 +72,6 @@ async def create_item(item: ItemCreate, user_id: str) -> ItemModel:
     else:
         raise ValueError("Sink does not belong to the user.")
 
-
 async def get_items_by_board(sink_id: str) -> List[ItemModel]:
     items = []
     async for item in items_collection.find(
@@ -80,6 +79,15 @@ async def get_items_by_board(sink_id: str) -> List[ItemModel]:
     ):
         items.append(ItemModel(**item))
     return items
+
+
+async def get_item_by_id(item_id: str) -> ItemModel:
+    item = await items_collection.find_one(
+        {"_id": ObjectId(item_id)}
+    )
+    if not item:
+        raise ValueError("Item not found or does not belong to the user.")
+    return ItemModel(**item)
 
 
 
