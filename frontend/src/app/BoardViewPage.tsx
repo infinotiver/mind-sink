@@ -1,15 +1,18 @@
-import { useParams } from "react-router-dom";
-import { useQuery, useQueries } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getItemsBySink, type Item } from "@/api/items";
-import { getSink } from "@/api/sinks";
+import { deleteSink, getSink } from "@/api/sinks";
 import type { Sink } from "@/api/sinks";
 import GalleryItem from "@/components/masonry/galleryItem";
 import { getUserProfile } from "@/api/profile";
 import { FiEye } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
-
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const {
     data: sink,
     isLoading: isSinkLoading,
@@ -64,9 +67,25 @@ export default function BoardViewPage() {
             </span>
           ))}
         </div>
-        <div className="flex max-w-28 items-center justify-center gap-2 text-sm text-muted-foreground py-1 px-4 rounded-2xl border border-accent-foreground/25 bg-accent/50">
-          <FiEye />
-          {sink?.visibility}
+
+        <div className="flex justify-between w-full">
+          <div className="flex max-w-28 items-center justify-center gap-2 text-sm text-muted-foreground py-1 px-4 rounded-2xl border border-accent-foreground/25 bg-accent/50">
+            <FiEye />
+            {sink?.visibility}
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <Button
+              variant={"destructive"}
+              onClick={() => {
+                deleteSink(sink ? sink._id : "");
+                queryClient.invalidateQueries();
+                alert("Sink deleted successfully");
+                navigate("/dashboard")
+              }}
+            >
+              Delete Sink
+            </Button>
+          </div>
         </div>
       </div>
       <div className="columns-2 sm:columns-3 lg:columns-4">

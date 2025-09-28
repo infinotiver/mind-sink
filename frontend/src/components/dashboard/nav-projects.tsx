@@ -56,16 +56,16 @@ export function NavProjects({
               >
                 <DropdownMenuItem>
                   <FiFolder className="text-muted-foreground" />
-                  <span>View Project</span>
+                  <span>View Sink</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <FiType className="text-muted-foreground" />
-                  <span>Rename Project</span>
+                  <span>Rename Sink</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <FiTrash className="text-muted-foreground" />
-                  <span>Delete Project</span>
+                  <span>Delete Sink</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

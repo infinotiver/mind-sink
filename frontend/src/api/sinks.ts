@@ -39,3 +39,9 @@ export async function createSink(newSink: Omit<Sink, "_id" | "created_at">) {
   const res = await apiClient.post(`/sinks`, newSink);
   return res.data;
 }
+// DELETE SINK
+
+export async function deleteSink(sinkId: string) {
+  const res = await apiClient.delete(`/sinks/${sinkId}`);
+  return res.data;
+}
