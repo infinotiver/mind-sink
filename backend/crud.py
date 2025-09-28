@@ -118,7 +118,7 @@ async def get_all_items() -> List[ItemModel]:
 
 
 async def delete_item(item_id: str, user_id: str):
-    await items_collection.delete_one({"_id": ObjectId(item_id), "user_id": user_id})
+    await items_collection.delete_one({"_id": ObjectId(item_id)})
 
 
 async def check_sink_belongs_to_user(sink_id: str, user_id: str) -> bool:
