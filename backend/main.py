@@ -87,13 +87,6 @@ async def api_create_item(
 ):
     return await create_item(item, user_id)
 
-@app.get("/items/sink/{sink_id}", response_model=List[ItemModel])
-async def api_get_items_by_sink(
-    sink_id: str, user_id: str = Depends(get_current_user_id)
-):
-    return await get_items_by_board(sink_id)
-
-
 @app.get("/items/user", response_model=List[ItemModel])
 async def api_get_items_by_user(auth_user_id: str, user_id:str= Depends(get_current_user_id)):
     return await get_items_by_user(auth_user_id)
@@ -104,7 +97,7 @@ async def api_get_all_items():
     return await get_all_items()
 
 @app.get("/items/item/{item_id}", response_model=ItemModel)
-async def api_get_items_by_sink(
+async def api_get_items_by_id(
     item_id: str, user_id: str = Depends(get_current_user_id)
 ):
     return await get_item_by_id(item_id)
