@@ -32,7 +32,7 @@ function ItemDetails({
   handleDelete: (id: string) => void;
   handleUpdate: (item: Item) => void;
 }) {
-  const handleUpdateTag = (newTags) => {
+  const handleUpdateTag = (newTags: string[]) => {
     item.tags = newTags;
   };
   return (
