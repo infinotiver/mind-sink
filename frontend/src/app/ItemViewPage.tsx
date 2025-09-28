@@ -6,7 +6,8 @@ import type { Item } from "@/api/items";
 import ImagePreview from "@/components/itemview/ImagePreview";
 import ItemDetails from "@/components/itemview/ItemDetails";
 import GalleryGrid from "@/components/masonry/galleryGrid";
-
+import { getSink } from "@/api/sinks";
+import { getUserProfile } from "@/api/profile";
 function ItemViewPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -18,7 +19,7 @@ function ItemViewPage() {
     data: itemData,
     isLoading,
     error,
-  } = useQuery({
+  } = useQuery<Item>({
     queryKey: ["items", itemID],
     queryFn: () =>
       itemID ? getItem(itemID) : Promise.reject("Item not found"),
@@ -82,16 +83,20 @@ function ItemViewPage() {
     <div className="flex gap-6 w-full h-full">
       <div className="flex flex-col gap-6 w-full lg:w-3/5">
         {itemData ? <ImagePreview item={itemData} /> : <p>Item not found</p>}
-        <ItemDetails
-          item={itemData}
-          selectedTags={selectedTags}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          handleAddTag={handleAddTag}
-          handleDeleteTag={handleDeleteTag}
+        {itemData && authorData && (
+          <ItemDetails
+            item={itemData}
+            sinkData={sinkData}
+            authorData={authorData}
+            selectedTags={selectedTags}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleAddTag={handleAddTag}
+            handleDeleteTag={handleDeleteTag}
             handleDelete={handleDelete}
             handleUpdate={handleUpdate}
-        />
+          />
+        )}
       </div>
       <div className="hidden lg:flex lg:w-2/5">
         <GalleryGrid columns={2} />
