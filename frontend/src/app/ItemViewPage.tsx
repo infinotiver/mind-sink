@@ -1,12 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getItem } from "@/api/items";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getItem, useDeleteItem, useUpdateItem } from "@/api/items";
+import type { Item } from "@/api/items";
 import ImagePreview from "@/components/itemview/ImagePreview";
 import ItemDetails from "@/components/itemview/ItemDetails";
 import GalleryGrid from "@/components/masonry/galleryGrid";
 
 function ItemViewPage() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { itemID } = useParams();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -22,6 +25,46 @@ function ItemViewPage() {
     enabled: !!itemID,
   });
 
+  const { data: sinkData } = useQuery({
+    queryKey: ["sink", itemID],
+    queryFn: () =>
+      itemData ? getSink(itemData.sink_id) : Promise.reject("Item not found"),
+    enabled: !!itemID,
+  });
+
+  const { data: authorData } = useQuery({
+    queryKey: ["users", itemID],
+    queryFn: () =>
+      sinkData
+        ? getUserProfile(sinkData.user_id)
+        : Promise.reject("Item not found"),
+    enabled: !!itemID,
+  });
+  const deleteMutation = useDeleteItem();
+
+  const handleDelete = (id: string) => {
+    deleteMutation.mutate(id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+        console.log("All queries invalidated");
+        alert("Item deleted successfully");
+        navigate("/dashboard");
+      },
+    });
+  };
+  const updateMutation = useUpdateItem();
+  const handleUpdate = (item: Item) => {
+    console.log("Handling update task");
+    updateMutation.mutate(
+      { itemId: itemID || "100", data: item },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries();
+          alert("Item updated successfully");
+        },
+      }
+    );
+  };
   const handleAddTag = (tag: string) => {
     if (tag && !selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
@@ -46,6 +89,8 @@ function ItemViewPage() {
           setInputValue={setInputValue}
           handleAddTag={handleAddTag}
           handleDeleteTag={handleDeleteTag}
+            handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
         />
       </div>
       <div className="hidden lg:flex lg:w-2/5">
