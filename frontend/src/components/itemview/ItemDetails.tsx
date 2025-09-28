@@ -1,16 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TagsInput from "@/components/common/TagsInput";
-import { FiCalendar, FiRefreshCcw, FiLink2, FiUser } from "react-icons/fi";
+import { FiCalendar, FiRefreshCcw, FiUser } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
-
+import type { Item } from "@/api/items";
+import { detectSource } from "@/utils/detectSource"; // Import detectSource
 function ItemDetails({
+  item,
   selectedTags,
   inputValue,
   setInputValue,
   handleAddTag,
   handleDeleteTag,
 }: {
+  item: Item;
   selectedTags: string[];
   inputValue: string;
   setInputValue: (value: string) => void;
@@ -18,15 +21,24 @@ function ItemDetails({
   handleDeleteTag: (tag: string) => void;
 }) {
   return (
-    <Card className="w-auto flex-1 flex flex-col">
+    <Card className="w-full flex flex-col">
       <CardHeader>
-        <CardTitle>Sink 1</CardTitle>
+        <CardTitle>Sink ID: {item.sink_id}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-2">
-          <FiUser /> <Label>Author</Label>
+          <FiUser />
+          <Label>Author</Label>
         </div>
-        <p className="text-sm flex gap-1 items-center justify-center text-foreground mb-2 ml-2"></p>
+        <p className="text-sm text-foreground">
+          <a
+            href={item.content}
+            className="text-blue-500 hover:underline hover:text-muted-foreground"
+            title={item.content}
+          >
+            {item.content}
+          </a>
+        </p>
         <TagsInput
           selectedTags={selectedTags}
           inputValue={inputValue}
@@ -36,22 +48,20 @@ function ItemDetails({
         />
         <div className="space-y-1 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <FiCalendar size={14} /> Created: 2023-10-01
+            <FiCalendar size={14} /> Created: (Not Available. Yet to add)
           </div>
           <div className="flex items-center gap-2">
-            <FiRefreshCcw size={14} /> Updated: 2023-10-05
+            <FiRefreshCcw size={14} /> Updated: (Not Available. Yet to add)
           </div>
           <div className="flex items-center gap-2 underline">
-            <FiLink2 size={14} />
-            <a href="">Source: Cosmos.so</a>
+            {detectSource(item.content).icon}
+            Source: {detectSource(item.content).name}
           </div>
         </div>
       </CardContent>
       <div className="flex gap-4 p-4 border-t">
-        <Button className="w-auto">Save Changes</Button>
-        <Button className="w-auto" variant={"destructive"}>
-          Delete Item
-        </Button>
+        <Button>Save Changes</Button>
+        <Button variant="destructive">Delete Item</Button>
       </div>
     </Card>
   );

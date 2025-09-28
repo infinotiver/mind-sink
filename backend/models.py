@@ -117,6 +117,7 @@ class ItemCreate(BaseModel):
     sink_id: str
     content: str = Field(..., min_length=1)
     type: str
+    tags: Optional[List[str]] = []
 
     @field_validator("sink_id")
     def validate_sink_id(cls, v: Any, info: ValidationInfo) -> Any:
@@ -125,11 +126,12 @@ class ItemCreate(BaseModel):
         return v
 
     @field_validator("type")
-    def validate_type(cls, v: Any, info: ValidationInfo) -> Any:
-        allowed_types = {"text", "image", "video", "link", "code", "quote", "file"}
+    def type_must_be_valid(cls, v: Any, info: ValidationInfo) -> Any:
+        allowed_types = {"link", "embed"}
         if v not in allowed_types:
             raise ValueError(f"type must be one of {allowed_types}")
         return v
+
 
 
 class UserModel(BaseModel):
