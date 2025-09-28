@@ -8,7 +8,7 @@ export interface Sink {
     user_id: string,
     created_at: string,
     visibility: string,
-    tags: []
+    tags: string[]
   
 }
 
@@ -33,23 +33,9 @@ export async function getSink(sinkId: string) {
   const res = await apiClient.get(`/sinks/${sinkId}`);
   return res.data;
 }
+// CREATE SINK
 
-// // UPDATE ITEM
-// export function useUpdateItem() {
-//   return useMutation({
-//     mutationFn: async ({ itemId, data }: { itemId: string; data: Item }) => {
-//       const res = await apiClient.put(`/items/${itemId}`, data);
-//       return res.data;
-//     },
-//   });
-// }
-
-// // DELETE ITEM
-// export function useDeleteItem(onSuccess?: () => void) {
-//   return useMutation({
-//     mutationFn: async (itemId: string) => {
-//       await apiClient.delete(`/items/${itemId}`);
-//     },
-//     onSuccess,
-//   });
-// }
+export async function createSink(newSink: Omit<Sink, "_id" | "created_at">) {
+  const res = await apiClient.post(`/sinks`, newSink);
+  return res.data;
+}
