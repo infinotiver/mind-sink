@@ -10,7 +10,7 @@ function ImagePreview({ item }: { item: Item }) {
         alt="Preview"
         className="rounded-lg shadow-lg object-contain max-h-[60vh] max-w-full"
       />
-      <div className="absolute top-4 right-4 flex gap-2 bg-accent/75 p-2 rounded-2xl">
+      <div className="absolute top-4 right-4 flex gap-2 bg-accent/75 p-2 rounded-2xl border border-accent-foreground/50">
         <Button size="icon" variant="default">
           <FiDownload size={18} />
         </Button>
@@ -19,7 +19,7 @@ function ImagePreview({ item }: { item: Item }) {
         </Button>
       </div>
       <div className="absolute bottom-4 left-4">
-        <div className="flex items-center gap-1 text-sm text-foreground bg-accent/75 p-2 rounded-2xl">
+        <div className="flex items-center gap-1 text-sm text-foreground bg-accent/75 p-2 rounded-2xl border border-accent-foreground/50">
           <FiInfo />
           {item._id}
         </div>
