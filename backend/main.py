@@ -91,7 +91,7 @@ async def api_create_item(
 async def api_get_items_by_sink(
     sink_id: str, user_id: str = Depends(get_current_user_id)
 ):
-    return await get_items_by_board(sink_id, user_id)
+    return await get_items_by_board(sink_id)
 
 
 @app.get("/items/user", response_model=List[ItemModel])
