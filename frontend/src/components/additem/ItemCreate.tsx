@@ -40,9 +40,11 @@ function ItemCreate({
           id="linkInput"
           className="mt-1 block w-full rounded-md border border-input bg-accent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           placeholder="Enter a link"
-          value={linkValue}
+          value={linkValue || ""}
           onChange={(e) => {
-            handleUpdateLink(e.target.value);
+            const newValue = e.target.value;
+  
+            handleUpdateLink(newValue);
           }}
         />
       </div>
