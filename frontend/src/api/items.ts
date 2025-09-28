@@ -4,6 +4,7 @@ export interface Item {
   sink_id: string;
   content: string;
   type: string;
+  tags: string[]
 }
 
 export async function getUserItems(userId: string) {
