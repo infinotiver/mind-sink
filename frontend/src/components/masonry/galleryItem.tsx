@@ -23,7 +23,7 @@ export default function GalleryItem({
   tags = [],
   columns,
 }: GalleryItemProps) {
-  const textSize = `text-${columns === 1 ? "[10px]" : columns === 2 ? "xs" : columns === 3 ? "base" : "xl"}`; 
+  const textSize = `text-${columns === 1 ? "[10px]" : columns === 2 ? "xs" : columns === 3 ? "sm" : "base"}`; 
   console.log(textSize);
 
   return (
@@ -39,7 +39,7 @@ export default function GalleryItem({
           <Button variant="link" size="sm" asChild className="mb-2">
             <Link
               to={`/dashboard/items/${index}`}
-              className="flex items-center space-x-1 text-base"
+              className={`flex items-center space-x-1 text-base ${textSize}`}
             >
               <FiExternalLink />
               <span>View</span>

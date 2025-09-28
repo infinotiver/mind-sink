@@ -37,7 +37,7 @@ function ItemViewPage() {
 
   return (
     <div className="flex gap-6 w-full h-full">
-      <div className="flex flex-col gap-6 w-3/5">
+      <div className="flex flex-col gap-6 w-full lg:w-3/5">
         {itemData ? <ImagePreview item={itemData} /> : <p>Item not found</p>}
         <ItemDetails
           item={itemData}
@@ -48,8 +48,8 @@ function ItemViewPage() {
           handleDeleteTag={handleDeleteTag}
         />
       </div>
-      <div className="w-2/5">
-        <GalleryGrid columns={2}/>
+      <div className="hidden lg:flex lg:w-2/5">
+        <GalleryGrid columns={2} />
       </div>
     </div>
   );

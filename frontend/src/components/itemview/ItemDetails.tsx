@@ -36,7 +36,7 @@ function ItemDetails({
             className="text-blue-500 hover:underline hover:text-muted-foreground"
             title={item.content}
           >
-            {item.content}
+            {item.content.length > 50 ? `${item.content.substring(0, 50)}...` : item.content}
           </a>
         </p>
         <TagsInput
