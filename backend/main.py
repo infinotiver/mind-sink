@@ -79,7 +79,7 @@ async def api_delete_board(board_id: str, user_id: str = Depends(get_current_use
 
 @app.get("/sinks/{board_id}/items", response_model=List[ItemModel])
 async def api_get_items(board_id: str, user_id: str = Depends(get_current_user_id)):
-    return await get_items_by_board(board_id, user_id)
+    return await get_items_by_board(board_id)
 
 @app.post("/items", response_model=ItemModel)
 async def api_create_item(
