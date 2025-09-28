@@ -20,14 +20,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
   useEffect(() => {
     if (token) {
-      console.log("Token detected, saving to localStorage");
       // Save token globally
       localStorage.setItem("token", token);
 
-      console.log("Fetching user profile...");
       getMeUserProfile()
         .then((user) => {
-          console.log("User profile fetched successfully:", user);
           setUser(user);
         })
         .catch((error) => {
@@ -41,12 +38,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [token]);
   const login = (newToken: string) => {
-    console.debug("Login called with token:", newToken);
     setToken(newToken);
   };
 
   const logout = () => {
-    console.debug("Logout called");
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
