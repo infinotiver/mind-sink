@@ -8,3 +8,4 @@ python-dotenv
 pyjwt
 httpsx
 datetime
+gunicorn
