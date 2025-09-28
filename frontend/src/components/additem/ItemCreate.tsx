@@ -1,9 +1,17 @@
 import TagsInput from "@/components/common/TagsInput";
 import { Button } from "@/components/ui/button";
 import type { JSX } from "react/jsx-runtime";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
-
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/context/AuthProvider";
+import { getUserSinks } from "@/api/sinks";
+import type { Sink } from "@/api/sinks";
 function ItemCreate({
   selectedTags,
   inputValue,
@@ -14,6 +22,9 @@ function ItemCreate({
   handleDeleteTag,
   handleUpdateLink,
   handleUpdateSource,
+  onAdd,
+  selectedBoardId,
+  setSelectedBoardId,
 }: {
   selectedTags: string[];
   inputValue: string;
@@ -24,8 +35,22 @@ function ItemCreate({
   handleDeleteTag: (tag: string) => void;
   handleUpdateLink: (link: string) => void;
   handleUpdateSource: (link: string) => void;
+  onAdd: () => void;
+  selectedBoardId: string | null;
+  setSelectedBoardId: React.Dispatch<React.SetStateAction<string | null>>;
 }): JSX.Element {
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null);
+  const { user } = useAuth();
+  const { data: userSinksData = [] } = useQuery<Sink[]>({
+    queryKey: ["sink"],
+    queryFn: async () => {
+      if (user) {
+        return await getUserSinks(user.user_id);
+      }
+      return Promise.reject("User not authenticated");
+    },
+  });
+
   return (
     <div className="w-auto flex-1 flex flex-col p-4">
       <div className="mb-4">
@@ -43,7 +68,7 @@ function ItemCreate({
           value={linkValue || ""}
           onChange={(e) => {
             const newValue = e.target.value;
-  
+
             handleUpdateLink(newValue);
           }}
         />
@@ -65,15 +90,17 @@ function ItemCreate({
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setSelectedBoard("Board 1")}>
-              Board 1
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSelectedBoard("Board 2")}>
-              Board 2
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSelectedBoard("Board 3")}>
-              Board 3
-            </DropdownMenuItem>
+            {userSinksData?.map((sink: Sink) => (
+              <DropdownMenuItem
+                key={sink._id}
+                onClick={() => {
+                  setSelectedBoard(sink.title);
+                  setSelectedBoardId(sink._id);
+                }}
+              >
+                {sink.title}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -106,7 +133,9 @@ function ItemCreate({
         </div>
       </div>
       <div className="flex justify-end mt-4">
-        <Button className="w-auto">Add Image</Button>
+        <Button className="w-auto" onClick={onAdd}>
+          Add Image
+        </Button>
       </div>
     </div>
   );

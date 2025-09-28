@@ -4,6 +4,8 @@ import ItemCreate from "@/components/additem/ItemCreate";
 import { detectSource } from "@/utils/detectSource"; // Import detectSource
 import { FiLink } from "react-icons/fi";
 import type { JSX } from "react/jsx-runtime";
+import { useNavigate } from "react-router-dom";
+import { useCreateItem } from "@/api/items";
 
 export default function AddItemPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -13,7 +15,30 @@ export default function AddItemPage() {
     icon: JSX.Element;
     name: string;
   }>({ icon: <FiLink />, name: "" });
-
+  const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
+  const createMutation = useCreateItem();
+  const navigate = useNavigate();
+  const handleCreate = () => {
+    if (!selectedBoardId) {
+      alert("Please select a board before adding an image.");
+      return;
+    }
+    const newItem = {
+      sink_id: selectedBoardId,
+      content: itemLink,
+      type: "link",
+      tags: selectedTags,
+    };
+    createMutation.mutate(newItem, {
+      onSuccess: () => {
+        alert("Item created!");
+        navigate("/dashboard");
+      },
+      onError: (err) => {
+        alert("Failed to create item: " + err.message);
+      },
+    });
+  };
   const handleAddTag = (tag: string) => {
     if (tag && !selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
@@ -26,7 +51,7 @@ export default function AddItemPage() {
 
   const handleUpdateLink = (link: string) => {
     setItemLink(link);
-    setSourceValue(detectSource(link)); // Use detectSource from utility
+    setSourceValue(detectSource(link));
   };
 
   const handleUpdateSource = (name: string) => {
@@ -46,6 +71,9 @@ export default function AddItemPage() {
         handleDeleteTag={handleDeleteTag}
         handleUpdateLink={handleUpdateLink}
         handleUpdateSource={handleUpdateSource}
+        onAdd={handleCreate}
+        selectedBoardId={selectedBoardId}
+        setSelectedBoardId={setSelectedBoardId}
       />
     </div>
   );
