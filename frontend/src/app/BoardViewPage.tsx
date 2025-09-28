@@ -6,6 +6,7 @@ import type { Sink } from "@/api/sinks";
 import GalleryItem from "@/components/masonry/galleryItem";
 import { getUserProfile } from "@/api/profile";
 import { FiEye } from "react-icons/fi";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
 
@@ -44,7 +45,10 @@ export default function BoardViewPage() {
       <div className="flex flex-col gap-2 p-4 bg-background rounded-md shadow-md mb-4">
         <div className="text-2xl text-foreground">{sink?.title}</div>
         <div className="flex gap-2 items-center text-md text-foreground">
-          <img src={userData?.avatar_url} alt="Author's avatar" className="w-6 h-6 rounded-4xl border border-accent-foreground" />
+          <Avatar>
+            <AvatarImage src={userData?.avatar_url} />
+            <AvatarFallback>XX</AvatarFallback>
+          </Avatar>
           {userData?.username}
         </div>
         <p className="text-sm text-muted-foreground">
