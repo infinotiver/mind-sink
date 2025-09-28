@@ -5,6 +5,7 @@ import { FiExternalLink, FiUser } from "react-icons/fi";
 interface GalleryItemProps {
   index: string | number;
   author: string;
+  author_id: string;
   path: string;
   name: string;
   sinkName?: string;
@@ -15,10 +16,12 @@ interface GalleryItemProps {
 export default function GalleryItem({
   index,
   author,
+  author_id,
   path,
   name,
   sinkName = "Unable to fetch",
   tags = [],
+  columns,
 }: GalleryItemProps) {
   const textSize = `text-${columns === 1 ? "[10px]" : columns === 2 ? "xs" : columns === 3 ? "base" : "xl"}`; 
   console.log(textSize);
@@ -53,7 +56,8 @@ export default function GalleryItem({
           >
             <Link to={`/users/${author_id}`}>
               <div className="flex justify-center items-center gap-2 hover:underline hover:text-muted-foreground">
-                <FiUser />{author}
+                <FiUser />
+                {author}
               </div>
             </Link>
           </p>
