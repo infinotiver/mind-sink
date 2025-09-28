@@ -9,26 +9,42 @@ function TagsInput({
   setInputValue,
   handleAddTag,
   handleDeleteTag,
-  initialTags = [], // Optional prop for preloaded tags
+  initialTags = [],
+  onTagsChange, // New callback prop
 }: {
   selectedTags: string[];
   inputValue: string;
   setInputValue: (value: string) => void;
   handleAddTag: (tag: string) => void;
   handleDeleteTag: (tag: string) => void;
-  initialTags?: string[]; // New optional prop
+  initialTags?: string[];
+  onTagsChange?: (tags: string[]) => void; // New optional prop
 }) {
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim()) {
       e.preventDefault();
-      handleAddTag(inputValue.trim());
+      const newTag = inputValue.trim();
+      handleAddTag(newTag);
       setInputValue("");
+      if (onTagsChange) {
+        onTagsChange([...selectedTags, newTag]); // Notify parent of updated tags
+      }
+    }
+  };
+
+  const handleTagDelete = (tag: string) => {
+    handleDeleteTag(tag);
+    if (onTagsChange) {
+      onTagsChange(selectedTags.filter((t) => t !== tag)); // Notify parent of updated tags
     }
   };
 
   React.useEffect(() => {
     initialTags.forEach((tag) => handleAddTag(tag));
-  }, [initialTags, handleAddTag]);
+    if (onTagsChange) {
+      onTagsChange([...initialTags]); // Notify parent of initial tags
+    }
+  }, [initialTags, handleAddTag, onTagsChange]);
 
   return (
     <div>
@@ -51,7 +67,7 @@ function TagsInput({
             {tag}
             <FiX
               className="cursor-pointer text-muted-foreground group-hover:text-secondary-foreground"
-              onClick={() => handleDeleteTag(tag)}
+              onClick={() => handleTagDelete(tag)}
             />
           </span>
         ))}
