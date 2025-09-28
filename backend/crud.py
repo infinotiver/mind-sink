@@ -72,6 +72,7 @@ async def create_item(item: ItemCreate, user_id: str) -> ItemModel:
     else:
         raise ValueError("Sink does not belong to the user.")
 
+
 async def get_items_by_board(sink_id: str) -> List[ItemModel]:
     items = []
     async for item in items_collection.find(
@@ -95,17 +96,18 @@ async def get_items_by_user(user_id: str) -> List[ItemModel]:
     # 1) pull down just the _ids of boards this user owns
     board_cursor = boards_collection.find(
       {"user_id": user_id},
-      {"_id": 1}
     )
     board_ids = [doc["_id"] async for doc in board_cursor]
+    print(f"[get_items_by_user] user_id={user_id} board_ids={board_ids}")
     if not board_ids:
         return []
 
     # 2) fetch all items whose sink_id is in that list
-    items = []
+    items: List[ItemModel] = []
     async for item in items_collection.find({
       "sink_id": {"$in": board_ids}
     }):
+        print(f"[get_items_by_user] raw item: id={item.get('_id')} tags={item.get('tags')}")
         items.append(ItemModel(**item))
     return items
 
@@ -147,24 +149,22 @@ async def update_sink(sink_id: str, user_id: str, update_data: dict) -> SinkMode
     return SinkModel(**updated_sink)
 
 
-async def update_item(item_id: str, user_id: str, update_data: dict) -> ItemModel:
-    # Ensure the item belongs to the user
-    item = await items_collection.find_one(
-        {"_id": ObjectId(item_id), "user_id": user_id}
-    )
-    if not item:
-        raise ValueError("Item does not belong to the user.")
+async def update_item(item_id: str, update_data: dict) -> ItemModel:
+    # Convert update_data to ItemModel and ensure sink_id is an ObjectId
+    item_data = ItemModel(**update_data)
+    item_dict = item_data.model_dump()
+    item_dict["sink_id"] = ObjectId(item_dict["sink_id"])
 
     # Update the item
     result = await items_collection.update_one(
-        {"_id": ObjectId(item_id), "user_id": user_id}, {"$set": update_data}
+        {"_id": ObjectId(item_id)}, {"$set": item_dict}
     )
 
     if result.modified_count == 0:
         raise ValueError("Failed to update the item.")
 
     updated_item = await items_collection.find_one(
-        {"_id": ObjectId(item_id), "user_id": user_id}
+        {"_id": ObjectId(item_id)}
     )
     return ItemModel(**updated_item)
 

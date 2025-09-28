@@ -117,10 +117,10 @@ async def api_delete_item(item_id: str, user_id: str = Depends(get_current_user_
 
 @app.put("/items/{item_id}", response_model=ItemModel)
 async def api_update_item(
-    item_id: str, item: ItemCreate, user_id: str = Depends(get_current_user_id)
+    item_id: str, item: dict, user_id: str = Depends(get_current_user_id)
 ):
     try:
-        updated_item = await update_item(item_id, item, user_id)
+        updated_item = await update_item(item_id, item)
         if not updated_item:
             raise HTTPException(status_code=404, detail="Item not found")
         return updated_item
