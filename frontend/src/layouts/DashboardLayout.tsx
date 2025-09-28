@@ -7,10 +7,21 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router-dom";
-import { useAuth } from "@/context/AuthProvider"; 
+import { useAuth } from "@/context/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import { getUserSinks } from "@/api/sinks";
+import type { Sink } from "@/api/sinks";
 
 export default function DashboardLayout() {
-  const {user} = useAuth();
+  const { user } = useAuth();
+  const { data, isLoading, error } = useQuery<Sink[]>({
+    queryKey: ["sinks", user?.id],
+    queryFn: () =>
+      user?.id ? getUserSinks(user.user_id) : Promise.reject("User ID is missing"),
+  });
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Failed to load item. {error.toString()}</p>;
+  console.log("From the navbar", data)
   return (
     <>
       <SidebarProvider>
@@ -22,10 +33,11 @@ export default function DashboardLayout() {
               email: user ? "Discord Login" : "Unknown login method",
               avatar: user?.avatar_url || "",
             },
-            projects: [
-              { name: "Blue Board", url: "/dashboard/sink/1" },
-              { name: "Aesthetic Project Covers", url: "/dashboard/sink/2" },
-            ],
+            projects:
+              data?.map((sink) => ({
+                name: sink.title,
+                url: `/dashboard/sink/${sink._id}`,
+              })) || [],
           }}
         />
         <SidebarInset>
