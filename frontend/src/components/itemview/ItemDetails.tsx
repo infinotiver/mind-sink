@@ -45,6 +45,7 @@ function ItemDetails({
           setInputValue={setInputValue}
           handleAddTag={handleAddTag}
           handleDeleteTag={handleDeleteTag}
+          initialTags={item.tags}
         />
         <div className="space-y-1 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">

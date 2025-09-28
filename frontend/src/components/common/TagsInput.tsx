@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FiX } from "react-icons/fi";
+import React from "react";
 
 function TagsInput({
   selectedTags,
@@ -8,12 +9,14 @@ function TagsInput({
   setInputValue,
   handleAddTag,
   handleDeleteTag,
+  initialTags = [], // Optional prop for preloaded tags
 }: {
   selectedTags: string[];
   inputValue: string;
   setInputValue: (value: string) => void;
   handleAddTag: (tag: string) => void;
   handleDeleteTag: (tag: string) => void;
+  initialTags?: string[]; // New optional prop
 }) {
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim()) {
@@ -22,6 +25,10 @@ function TagsInput({
       setInputValue("");
     }
   };
+
+  React.useEffect(() => {
+    initialTags.forEach((tag) => handleAddTag(tag));
+  }, [initialTags, handleAddTag]);
 
   return (
     <div>
