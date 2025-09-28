@@ -10,7 +10,6 @@ interface GalleryItemProps {
   name: string;
   sinkName?: string;
   tags?: string[];
-  columns: number; // Add columns prop
 }
 
 export default function GalleryItem({
@@ -21,10 +20,9 @@ export default function GalleryItem({
   name,
   sinkName = "Unable to fetch",
   tags = [],
-  columns,
+ 
 }: GalleryItemProps) {
-  const textSize = `text-${columns === 1 ? "[10px]" : columns === 2 ? "xs" : columns === 3 ? "sm" : "base"}`; 
-  console.log(textSize);
+
 
   return (
     <div className="relative group">
@@ -39,7 +37,7 @@ export default function GalleryItem({
           <Button variant="link" size="sm" asChild className="mb-2">
             <Link
               to={`/dashboard/items/${index}`}
-              className={`flex items-center space-x-1 text-base ${textSize}`}
+              className={`flex items-center space-x-1 mb-2 text-[10px] sm:text-xs md:text-sm lg:text-base}`}
             >
               <FiExternalLink />
               <span>View</span>
@@ -47,12 +45,12 @@ export default function GalleryItem({
           </Button>
 
           {sinkName && (
-            <p className={`text-base ${textSize} text-foreground mb-2 ml-2`}>
+            <p className={`mb-2 text-[10px] sm:text-xs md:text-sm lg:text-base} text-foreground mb-2 ml-2`}>
               {sinkName}
             </p>
           )}
-          <p
-            className={`text-base ${textSize} flex gap-1 items-center justify-center text-foreground mb-2 ml-2`}
+          <div
+            className={`mb-2 text-[10px] sm:text-xs md:text-sm lg:text-base} flex gap-1 items-center justify-center text-foreground mb-2 ml-2`}
           >
             <Link to={`/users/${author_id}`}>
               <div className="flex justify-center items-center gap-2 hover:underline hover:text-muted-foreground">
@@ -60,7 +58,7 @@ export default function GalleryItem({
                 {author}
               </div>
             </Link>
-          </p>
+          </div>
           {tags && (
             <div className="flex flex-wrap justify-end gap-2">
               {tags.map((tag, idx) => (
