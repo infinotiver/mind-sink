@@ -5,7 +5,7 @@ import { getSink } from "@/api/sinks";
 import type { Sink } from "@/api/sinks";
 import GalleryItem from "@/components/masonry/galleryItem";
 import { getUserProfile } from "@/api/profile";
-
+import { FiEye } from "react-icons/fi";
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
 
@@ -30,23 +30,26 @@ export default function BoardViewPage() {
       sinkID ? getItemsBySink(sinkID) : Promise.reject("Items not found"),
     enabled: !!sinkID,
   });
-  const {
-    data: userData, error: userError
-  } = useQuery({
+  const { data: userData, error: userError } = useQuery({
     queryKey: ["users", sink?.user_id],
     queryFn: () =>
       sink ? getUserProfile(sink?.user_id) : Promise.reject("Sink not found"),
-    enabled: !!sink
+    enabled: !!sink,
   });
- 
+
   if (isSinkLoading || areItemsLoading) return <div>Loading...</div>;
   if (itemsError || sinkError || userError) return <p>Failed to load item.</p>;
   return (
     <>
-      <div className="p-4 bg-background rounded-md shadow-md mb-4">
+      <div className="flex flex-col gap-2 p-4 bg-background rounded-md shadow-md mb-4">
         <div className="text-2xl text-foreground">{sink?.title}</div>
-        <p className="text-sm text-foreground">Created by: {userData?.username}</p>
-        <p className="text-sm text-muted-foreground">Description: {sink?.description || "No description available"}</p>
+        <div className="flex gap-2 items-center text-md text-foreground">
+          <img src={userData?.avatar_url} alt="Author's avatar" className="w-6 h-6 rounded-4xl border border-accent-foreground" />
+          {userData?.username}
+        </div>
+        <p className="text-sm text-muted-foreground">
+          {sink?.description || "No description available"}
+        </p>
         <div className="flex flex-wrap gap-2 mt-2">
           {sink?.tags?.map((tag, index) => (
             <span
@@ -57,7 +60,10 @@ export default function BoardViewPage() {
             </span>
           ))}
         </div>
-        <div>{sink?.visibility}</div>
+        <div className="flex max-w-28 items-center justify-center gap-2 text-sm text-muted-foreground py-1 px-4 rounded-2xl border border-accent-foreground/25 bg-accent/50">
+          <FiEye />
+          {sink?.visibility}
+        </div>
       </div>
       <div className="columns-2 sm:columns-3 lg:columns-4">
         {items?.map((item: Item) => (

@@ -17,11 +17,13 @@ export default function DashboardLayout() {
   const { data, isLoading, error } = useQuery<Sink[]>({
     queryKey: ["sinks", user?.id],
     queryFn: () =>
-      user?.id ? getUserSinks(user.user_id) : Promise.reject("User ID is missing"),
+      user?.id
+        ? getUserSinks(user.user_id)
+        : Promise.reject("User ID is missing"),
   });
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Failed to load item. {error.toString()}</p>;
-  console.log("From the navbar", data)
+  console.log("From the navbar", data);
   return (
     <>
       <SidebarProvider>
@@ -37,6 +39,7 @@ export default function DashboardLayout() {
               data?.map((sink) => ({
                 name: sink.title,
                 url: `/dashboard/sink/${sink._id}`,
+                
               })) || [],
           }}
         />

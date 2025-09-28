@@ -1,6 +1,6 @@
 "use client";
 
-import { FiFolder, FiMoreHorizontal, FiShare, FiTrash } from "react-icons/fi";
+import { FiFolder, FiMoreHorizontal, FiType, FiTrash } from "react-icons/fi";
 
 import {
   DropdownMenu,
@@ -59,8 +59,8 @@ export function NavProjects({
                   <span>View Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <FiShare className="text-muted-foreground" />
-                  <span>Share Project</span>
+                  <FiType className="text-muted-foreground" />
+                  <span>Rename Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
