@@ -10,9 +10,7 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     try {
       const token = params.get("token");
-      console.log(token);
       if (token) {
-        console.log("Calling API Client Login Function")
         login(token);
         navigate("/dashboard"); // or home page
       } else {
