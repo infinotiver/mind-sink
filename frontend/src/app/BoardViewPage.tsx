@@ -50,9 +50,9 @@ export default function BoardViewPage() {
       <div className="p-4 bg-red-100 text-red-800 rounded-md">
         <h2 className="text-lg font-bold">Error</h2>
         <ul className="list-disc pl-5">
-          {sinkError && <li>Failed to load sink: {sinkError.message || sinkError}</li>}
-          {itemsError && <li>Failed to load items: {itemsError.message || itemsError}</li>}
-          {userError && <li>Failed to load user profile: {userError.message || userError}</li>}
+          {sinkError && <li>Failed to load sink: {sinkError.message || String(sinkError)}</li>}
+          {itemsError && <li>Failed to load items: {itemsError.message || String(itemsError)}</li>}
+          {userError && <li>Failed to load user profile: {userError.message || String(userError)}</li>}
         </ul>
       </div>
     );
