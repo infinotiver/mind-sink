@@ -39,7 +39,7 @@ function ItemCreate({
   selectedBoardId: string | null;
   setSelectedBoardId: React.Dispatch<React.SetStateAction<string | null>>;
 }): JSX.Element {
-  const [selectedBoard, setSelectedBoard] = useState<string | null>(null);
+  const [selectedBoard, setSelectedBoard] = useState<string | null>(selectedBoardId);
   const { user } = useAuth();
   const { data: userSinksData = [] } = useQuery<Sink[]>({
     queryKey: ["sink"],
