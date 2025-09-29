@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
 
 import { FaDiscord } from "react-icons/fa";
 export function LoginForm({
