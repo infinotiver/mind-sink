@@ -14,7 +14,7 @@ export default function LoginPage() {
           className="flex items-center gap-2"
           asChild
         >
-          <Link to={`${import.meta.env.VITE_API_URL}auth/login`}>
+          <Link to={`${import.meta.env.VITE_API_URL}/auth/login`}>
             <FaDiscord />
             Login with Discord
           </Link>
