@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-from .models import SinkModel, SinkCreate, ItemCreate, ItemModel
-from .crud import (
+from backend.models import SinkModel, SinkCreate, ItemCreate, ItemModel
+from backend.crud import (
     create_board,
     get_boards,
     get_board,
@@ -17,7 +17,7 @@ from .crud import (
     update_sink,
     get_user
 )
-from .auth import *
+from backend.auth import *
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 security = HTTPBearer()
