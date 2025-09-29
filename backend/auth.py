@@ -27,6 +27,7 @@ DISCORD_CLIENT_ID = os.environ["DISCORD_CLIENT_ID"]
 DISCORD_CLIENT_SECRET = os.environ["DISCORD_CLIENT_SECRET"]
 DISCORD_REDIRECT_URI = os.environ["DISCORD_REDIRECT_URI"]
 SECRET_KEY = os.environ["JWT_SECRET"]
+FRONTEND_URL = os.environ["FRONTEND_URL"]
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 3  # 3 day
 
@@ -111,7 +112,7 @@ async def auth_callback(request: Request):
         token = jwt.encode(jwt_payload, SECRET_KEY, algorithm=ALGORITHM)
 
         # ✅ redirect to frontend with token
-        frontend_url = f"http://localhost:5173/auth/callback?token={token}"
+        frontend_url = f"{FRONTEND_URL}/auth/callback?token={token}"
         return RedirectResponse(url=frontend_url)
 
 
