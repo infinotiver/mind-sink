@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthProvider";
 import AuthCallbackPage from "./app/AuthCallbackPage";
 import ViewSinksPage from "./app/ViewSinksPage";
+import ManifestoPage from "./app/ManifestoPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -21,6 +22,10 @@ function App() {
       path: "/",
       element: <HomePage />,
       errorElement: <HomePage />, // Redirect to homepage for missing routes
+    },
+    {
+      path: "/manifesto",
+      element: <ManifestoPage/>
     },
     {
       path: "/login",
