@@ -63,10 +63,14 @@ export default function HomePage() {
                 Get Started
               </Button>
             </Link>
-            <Button variant="outline" size="lg">
-              Learn More
-            </Button>
+            <a href="https://github.com/infinotiver/mind-sink">
+              <Button variant="outline" size="lg">
+                Learn More
+              </Button>
+            </a>
           </div>
+          The project is still in alpha phase of development. For list of known
+          issues, refer to Github Repo
         </div>
         <div className="fixed bottom-4 right-4">
           <ModeToggle />
