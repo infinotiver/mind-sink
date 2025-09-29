@@ -14,7 +14,9 @@ from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 
-config = Config("backend/.env")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/
+ENV_PATH = os.path.join(BASE_DIR, ".env")
+config = Config(ENV_PATH)
 
 DISCORD_CLIENT_ID = config("DISCORD_CLIENT_ID", cast=str)
 DISCORD_CLIENT_SECRET = config("DISCORD_CLIENT_SECRET", cast=str)
