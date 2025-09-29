@@ -14,14 +14,19 @@ from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/
-ENV_PATH = os.path.join(BASE_DIR, ".env")
-config = Config(ENV_PATH)
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/
+# ENV_PATH = os.path.join(BASE_DIR, ".env")
+# config = Config(ENV_PATH)
 
-DISCORD_CLIENT_ID = config("DISCORD_CLIENT_ID", cast=str)
-DISCORD_CLIENT_SECRET = config("DISCORD_CLIENT_SECRET", cast=str)
-DISCORD_REDIRECT_URI = config("DISCORD_REDIRECT_URI", cast=str)
-SECRET_KEY = config("JWT_SECRET", cast=str, default="mind-sink-secret")
+# DISCORD_CLIENT_ID = config("DISCORD_CLIENT_ID", cast=str)
+# DISCORD_CLIENT_SECRET = config("DISCORD_CLIENT_SECRET", cast=str)
+# DISCORD_REDIRECT_URI = config("DISCORD_REDIRECT_URI", cast=str)
+# SECRET_KEY = config("JWT_SECRET", cast=str, default="mind-sink-secret")
+
+DISCORD_CLIENT_ID = os.environ["DISCORD_CLIENT_ID"]
+DISCORD_CLIENT_SECRET = os.environ["DISCORD_CLIENT_SECRET"]
+DISCORD_REDIRECT_URI = os.environ["DISCORD_REDIRECT_URI"]
+SECRET_KEY = os.environ["JWT_SECRET"]
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 3  # 3 day
 
