@@ -19,7 +19,7 @@ export default function DashboardLayout() {
     queryFn: () =>
       user?.id
         ? getUserSinks(user.user_id)
-        : Promise.reject("User ID is missing"),
+        : Promise.reject("User ID is missing. Please login first before trying to access the dashboard"),
   });
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Failed to load item. {error.toString()}</p>;
