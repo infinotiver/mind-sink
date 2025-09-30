@@ -18,13 +18,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
   const [user, setUser] = useState<UserProfile | null>(null);
   const queryClient = useQueryClient();
+
   useEffect(() => {
     if (token) {
-      // Save token globally
+      console.log("Token found in localStorage. Attempting to fetch user profile...");
       localStorage.setItem("token", token);
 
       getMeUserProfile()
         .then((user) => {
+          console.log("User profile fetched successfully:", user);
           setUser(user);
         })
         .catch((error) => {
@@ -32,22 +34,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setToken(null);
           setUser(null);
           localStorage.removeItem("token");
+          console.warn("Token removed due to error during profile fetch.");
         });
     } else {
       console.log("No token found, skipping user profile fetch.");
     }
   }, [token]);
+
   const login = (newToken: string) => {
+    console.log("Login initiated. Token set.");
     setToken(newToken);
   };
 
   const logout = () => {
+    console.log("Logout initiated. Clearing token and user data...");
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
     console.debug("Token removed from localStorage");
     queryClient.clear(); // clear cached queries on logout
-    console.debug("Query cache cleared");  
+    console.debug("Query cache cleared");
   };
 
   return (
