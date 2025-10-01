@@ -87,16 +87,16 @@ export default function HomePage() {
             className="rounded-lg shadow-lg max-w-full h-auto"
           />
         </div>
-        <div className="flex items-center justify-center mt-6 text-sm text-muted-foreground my-4">
-          <span>
+        <div className="flex flex-col gap-2 sm:flex-row items-center justify-center m-4 sm:m-6 text-sm text-muted-foreground my-4 text-center sm:text-left">
+          
             Built with ❤️ using React, TypeScript, and Framer Motion by{" "}
             <a
               href="https://github.com/infinotiver"
-              className="text-muted-foreground hover:text-accent-foreground bg-secondary ml-2 px-2 py-1 border border-border rounded"
+              className="text-muted-foreground hover:text-accent-foreground bg-secondary px-2 py-1 border border-border rounded"
             >
               infinotiver
             </a>
-          </span>
+          
         </div>
         <div className="fixed bottom-4 right-4">
           <ModeToggle />
