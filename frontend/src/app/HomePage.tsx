@@ -69,7 +69,7 @@ export default function HomePage() {
               </Button>
             </a>
           </div>
-            <div>
+          <div>
             The project is still in alpha phase of development. For a list of{" "}
             <a
               href="https://github.com/infinotiver/mind-sink/issues"
@@ -79,16 +79,16 @@ export default function HomePage() {
             </a>
             , refer to the GitHub Repo.
           </div>
-          <div className="mt-8">
-            <img
-              src="/dashboard.png"
-              alt="Dashboard Demo"
-              className="rounded-lg shadow-lg max-w-full h-auto"
-            />
-          </div>
-          <div className="mt-6 text-sm text-muted-foreground">
-            Built with ❤️ using React, TypeScript, and Framer Motion. 
-          </div>
+        </div>
+        <div className="m-8">
+          <img
+            src="/dashboard.png"
+            alt="Dashboard Demo"
+            className="rounded-lg shadow-lg max-w-full h-auto"
+          />
+        </div>
+        <div className="mt-6 text-sm text-muted-foreground">
+          Built with ❤️ using React, TypeScript, and Framer Motion.
         </div>
         <div className="fixed bottom-4 right-4">
           <ModeToggle />
