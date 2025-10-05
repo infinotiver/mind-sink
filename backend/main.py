@@ -35,7 +35,10 @@ async def get_current_user_id(
 
 app = FastAPI()
 origins = [
-    "http://127.0.0.1:8001",
+     "http://localhost:5173",   # dev
+    "http://localhost:3000",  
+    "http://localhost:8000",
+    "https://mind-sink-6llu.onrender.com",  # prod frontend
 ]
 
 app.add_middleware(
