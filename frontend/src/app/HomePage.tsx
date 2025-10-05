@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 // import DevStatePanel from "@/components/common/DevStatsPanel";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Link } from "react-router-dom";
+import { FaChevronRight } from "react-icons/fa";
 
 export default function HomePage() {
   const scrollRef = useRef(null);
@@ -45,9 +46,9 @@ export default function HomePage() {
       <motion.div style={{ opacity: bgOpacity, scale: bgScale }}>
         <Navbar />
         <div className="flex flex-col items-center justify-center min-h-screen text-center gap-y-4 px-4 sm:px-8">
-          <h1 className="text-[min(8vw,84px)] font-medium mt-6 sm:mt-8 mb-3 sm:mb-4 flex flex-wrap items-center justify-center gap-3 md:gap-4">
-            Let your thoughts <span className="font-lora italic">sink</span>.
-          </h1>
+          <h2 className="text-[min(8vw,84px)] font-medium mt-6 sm:mt-8 mb-3 sm:mb-4 flex items-center justify-center gap-3 md:gap-4">
+            Let your thoughts <span className="font-lora italic">sink</span>
+          </h2>
           <div className="sm:px-8 text-lg/10 sm:text-md/8 text-foreground md:max-w-[60vw]">
             Mind Sink is
             <span className="chip">ad-free</span>,
@@ -59,8 +60,13 @@ export default function HomePage() {
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
             <Link to={"/dashboard"}>
-              <Button variant="default" size="lg" className="min-w-[20vw]">
-                Get Started
+              <Button
+                variant="default"
+                size="lg"
+                className="min-w-[20vw] group flex items-center justify-center"
+              >
+                Get Started{" "}
+                <FaChevronRight className="size-2.5 text-md group-hover:translate-x-1 transition-transform duration-200" />
               </Button>
             </Link>
             <a href="https://github.com/infinotiver/mind-sink">
@@ -96,13 +102,13 @@ export default function HomePage() {
             infinotiver
           </a>
           and feel free to{" "}
-            <a
+          <a
             href="https://github.com/infinotiver/mind-sink/issues/new"
             className="text-muted-foreground hover:text-accent-foreground bg-secondary px-2 py-1 border border-border rounded"
             id="contact"
-            >
+          >
             open an issue on GitHub
-            </a>
+          </a>
           .
         </div>
         <div className="fixed bottom-4 right-4">
