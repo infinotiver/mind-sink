@@ -57,7 +57,7 @@ export default function HomePage() {
             <span className="chip">no infinite scroll</span>
             so you focus on what matters
           </div>
-          <div className="mt-8 flex flex-wrap space-x-4 w-full justify-center">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
             <Link to={"/dashboard"}>
               <Button variant="default" size="lg" className="min-w-[20vw]">
                 Get Started
@@ -80,23 +80,30 @@ export default function HomePage() {
             , refer to the GitHub Repo.
           </div>
         </div>
-        <div className="m-8">
+        <div className="m-2 md:m-6 lg:m-8">
           <img
             src="/dashboard.png"
             alt="Dashboard Demo"
             className="rounded-lg shadow-lg max-w-full h-auto"
           />
         </div>
-        <div className="flex flex-col gap-2 sm:flex-row items-center justify-center m-4 sm:m-6 text-sm text-muted-foreground my-4 text-center sm:text-left">
-          
-            Built with ❤️ using React, TypeScript, and Framer Motion by{" "}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 m-4 sm:m-6 text-sm text-muted-foreground text-center sm:text-left">
+          Built with ❤️ using React, TypeScript, and Framer Motion by{" "}
+          <a
+            href="https://github.com/infinotiver"
+            className="text-muted-foreground hover:text-accent-foreground bg-secondary px-2 py-1 border border-border rounded"
+          >
+            infinotiver
+          </a>
+          and feel free to{" "}
             <a
-              href="https://github.com/infinotiver"
-              className="text-muted-foreground hover:text-accent-foreground bg-secondary px-2 py-1 border border-border rounded"
+            href="https://github.com/infinotiver/mind-sink/issues/new"
+            className="text-muted-foreground hover:text-accent-foreground bg-secondary px-2 py-1 border border-border rounded"
+            id="contact"
             >
-              infinotiver
+            open an issue on GitHub
             </a>
-          
+          .
         </div>
         <div className="fixed bottom-4 right-4">
           <ModeToggle />
