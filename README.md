@@ -1,7 +1,7 @@
 # Mind Sink
 ![Demo of Mind Sink Dashboard](https://raw.githubusercontent.com/infinotiver/mind-sink/refs/heads/main/frontend/public/dashboard.png)
 
-Mind Sink is a simple, ad-free web application designed to help users organize and showcase their creative inspirations without distractions. With no infinite scrolling, it ensures a focused and streamlined experience. Users can create boards (sinks), add items (images, links, etc.), and tag them for better organization.
+Mind Sink is a simple, ad-free web application designed to help users organize and showcase their creative inspirations without distractions. With no infinite scrolling and algorithims, it ensures a focused and streamlined experience. Users can create boards (sinks), add items (images, links, etc.), and tag them for better organization.
 
 
 ## Features
@@ -27,10 +27,16 @@ Mind Sink is a simple, ad-free web application designed to help users organize a
 - `src/context`: Context providers for authentication and global state.
 - `src/app`: Page-level components.
 
+### Backend (`backend/`)
+- `auth.py`: Authorization logic, handler and callback
+- `crud.py`: Basic CRUD (Create-Read-Update-Delete) functions for endpoints
+- `database.py`: MongoDB database initialization
+- `main.py`: FastAPI setup
+- `models.py`: Pydantic models for `Sinks`, `Users` and `Items`
+- `requirements.txt`: Requirements of the python backend API 
 ---
 
-<img src="https://raw.githubusercontent.com/infinotiver/mind-sink/refs/heads/main/frontend/public/ms.png" width=100/>
+<a href="https://mind-sink-6llu.onrender.com"><img src="https://raw.githubusercontent.com/infinotiver/mind-sink/refs/heads/main/frontend/public/ms.png" width=100/></a>
 
-Made for Hack Club's Summer of Making 2025
+[Originally Made for Hack Club's Summer of Making 2025](https://summer.hackclub.com/projects/6206)
 
-https://summer.hackclub.com/projects/6206
