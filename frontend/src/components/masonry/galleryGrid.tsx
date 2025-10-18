@@ -62,16 +62,17 @@ function GalleryGrid({ columns = 4 }: GalleryGridProps) {
         const sink = sinkQueries[i]?.data as Sink | undefined;
         const sinkName = sink?.title ?? "";
         return (
-          <GalleryItem
-            key={image._id}
-            name={image._id}
-            index={image._id}
-            author={user?.username || ""}
-            author_id={user?.user_id || ""}
-            path={image.content}
-            sinkName={sinkName}
-            tags={image.tags}
-          />
+          <div key={image._id}>
+            <GalleryItem
+              name={image._id}
+              index={image._id}
+              author={user?.username || ""}
+              author_id={user?.user_id || ""}
+              path={image.content}
+              sinkName={sinkName}
+              tags={image.tags}
+            />
+          </div>
         );
       })}
     </div>

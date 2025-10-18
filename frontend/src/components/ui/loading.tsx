@@ -1,5 +1,4 @@
 import { Spinner } from "@/components/ui/spinner";
-import React from "react";
 
 interface LoadingProps {
   message?: string;
