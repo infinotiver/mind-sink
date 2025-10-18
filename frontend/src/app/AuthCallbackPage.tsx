@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function AuthCallbackPage() {
   const [params] = useSearchParams();
@@ -25,5 +26,12 @@ export default function AuthCallbackPage() {
     }
   }, [params, login, navigate]);
 
-  return <p>Finishing login...</p>;
+  return (
+    <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+      <Spinner className="h-10 w-10" />
+      <p className="text-sm text-muted-foreground">
+        Finishing login — redirecting you now…
+      </p>
+    </div>
+  );
 }
