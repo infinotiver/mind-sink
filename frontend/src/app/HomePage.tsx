@@ -73,6 +73,11 @@ export default function HomePage() {
               <Button variant="outline" size="lg">
                 Learn More
               </Button>
+              <Link to={"/manifesto"}>
+                <Button variant="secondary" size="lg">
+                  Read Manifesto
+                </Button>
+              </Link>
             </a>
           </div>
           <div>
