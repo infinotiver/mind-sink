@@ -60,12 +60,14 @@ function GalleryGrid({ columns = 4 }: GalleryGridProps) {
     >
       {items.map((image: Item, i: number) => {
         const sink = sinkQueries[i]?.data as Sink | undefined;
-      if (isLoading) return <Loading message="Loading items…" />;
-      if (error) return <ErrorAlert title="Failed to load items" details={String(error)} />;
+        const sinkName = sink?.name ?? "";
+        return (
+          <GalleryItem
+            key={image._id}
             name={image._id}
-            index={image._id}
+            index={i}
             sinkName={sinkName}
-            // columns={columns}
+            columns={columns}
           />
         );
       })}
