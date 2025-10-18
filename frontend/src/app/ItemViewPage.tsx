@@ -8,6 +8,8 @@ import ItemDetails from "@/components/itemview/ItemDetails";
 import GalleryGrid from "@/components/masonry/galleryGrid";
 import { getSink } from "@/api/sinks";
 import { getUserProfile } from "@/api/profile";
+import Loading from "@/components/ui/loading";
+import ErrorAlert from "@/components/ui/error-alert";
 function ItemViewPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -76,8 +78,9 @@ function ItemViewPage() {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return `<p>Failed to load item. ${error}</p>`;
+  if (isLoading) return <Loading message="Loading item…" />;
+  if (error)
+    return <ErrorAlert title="Failed to load item" details={String(error)} />;
 
   return (
     <div className="flex gap-6 w-full h-full">

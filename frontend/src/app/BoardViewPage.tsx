@@ -8,6 +8,8 @@ import { getUserProfile } from "@/api/profile";
 import { FiEye } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import Loading from "@/components/ui/loading";
+import ErrorAlert from "@/components/ui/error-alert";
 
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
@@ -43,20 +45,19 @@ export default function BoardViewPage() {
     enabled: !!sink,
   });
 
-  if (isSinkLoading || areItemsLoading) return <div>Loading...</div>;
+  if (isSinkLoading || areItemsLoading)
+    return <Loading message="Loading sink…" />;
 
-  if (sinkError || itemsError || userError) {
+  if (sinkError || itemsError || userError)
     return (
-      <div className="p-4 bg-red-100 text-red-800 rounded-md">
-        <h2 className="text-lg font-bold">Error</h2>
-        <ul className="list-disc pl-5">
-          {sinkError && <li>Failed to load sink: {sinkError.message || String(sinkError)}</li>}
-          {itemsError && <li>Failed to load items: {itemsError.message || String(itemsError)}</li>}
-          {userError && <li>Failed to load user profile: {userError.message || String(userError)}</li>}
-        </ul>
-      </div>
+      <ErrorAlert
+        title="Error"
+        message="One or more data sources failed to load."
+        details={`sink: ${String(sinkError)}\nitems: ${String(
+          itemsError
+        )}\nuser: ${String(userError)}`}
+      />
     );
-  }
 
   return (
     <>

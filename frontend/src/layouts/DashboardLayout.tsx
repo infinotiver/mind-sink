@@ -11,6 +11,8 @@ import { useAuth } from "@/context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { getUserSinks } from "@/api/sinks";
 import type { Sink } from "@/api/sinks";
+import Loading from "@/components/ui/loading";
+import ErrorAlert from "@/components/ui/error-alert";
 
 export default function DashboardLayout() {
   const { user } = useAuth();
@@ -19,10 +21,16 @@ export default function DashboardLayout() {
     queryFn: () =>
       user?.id
         ? getUserSinks(user.user_id)
-        : Promise.reject("User ID is missing. Please login first before trying to access the dashboard"),
+        : Promise.reject(
+            "User ID is missing. Please login first before trying to access the dashboard"
+          ),
   });
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Failed to load item. {error.toString()}</p>;
+  if (isLoading) return <Loading message="Loading dashboard…" size="lg" />;
+
+  if (error)
+    return (
+      <ErrorAlert title="Failed to load dashboard" details={String(error)} />
+    );
   console.log("From the navbar", data);
   return (
     <>
@@ -39,7 +47,6 @@ export default function DashboardLayout() {
               data?.map((sink) => ({
                 name: sink.title,
                 url: `/dashboard/sink/${sink._id}`,
-                
               })) || [],
           }}
         />

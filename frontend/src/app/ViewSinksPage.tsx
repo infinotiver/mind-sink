@@ -4,6 +4,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthProvider";
 import type { Sink } from "@/api/sinks";
 import { Link } from "react-router-dom";
+import Loading from "@/components/ui/loading";
+import ErrorAlert from "@/components/ui/error-alert";
 export default function ViewSinksPage() {
   const { user } = useAuth();
   const {
@@ -15,13 +17,8 @@ export default function ViewSinksPage() {
     queryFn: () => getUserSinks(user ? user.user_id : ""),
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading sinks.</div>;
-  }
+  if (isLoading) return <Loading message="Loading sinks…" />;
+  if (isError) return <ErrorAlert title="Error loading sinks" />;
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -32,8 +29,7 @@ export default function ViewSinksPage() {
               <CardTitle>{sink.title}</CardTitle>
             </CardHeader>
             <CardContent>
-                      <p>{sink.description}</p>
-                      
+              <p>{sink.description}</p>
             </CardContent>
           </Card>
         </Link>

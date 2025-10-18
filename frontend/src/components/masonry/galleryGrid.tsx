@@ -5,6 +5,7 @@ import GalleryItem from "./galleryItem";
 import { useAuth } from "@/context/AuthProvider";
 import { getSink } from "@/api/sinks";
 import type { Sink } from "@/api/sinks";
+import { Spinner } from "@/components/ui/spinner";
 interface GalleryGridProps {
   columns?: number; // Optional prop to override the number of columns
 }
@@ -29,8 +30,20 @@ function GalleryGrid({ columns = 4 }: GalleryGridProps) {
       enabled: !!it.sink_id,
     })),
   });
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return `<p>Failed to load items. ${error}</p>`;
+  if (isLoading)
+    return (
+      <div className="min-h-[40vh] flex flex-col items-center justify-center gap-4">
+        <Spinner className="h-8 w-8" />
+        <p className="text-sm text-muted-foreground">Loading items…</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="p-4 text-center text-red-700">
+        Failed to load items: {String(error)}
+      </div>
+    );
 
   return (
     <div
@@ -47,13 +60,8 @@ function GalleryGrid({ columns = 4 }: GalleryGridProps) {
     >
       {items.map((image: Item, i: number) => {
         const sink = sinkQueries[i]?.data as Sink | undefined;
-        const sinkName = sink?.title ?? image.sink_id;
-        return (
-          <GalleryItem
-            key={image._id}
-            author={user ? user?.username : ""}
-            author_id={user ? user?.user_id : ""}
-            path={image.content}
+      if (isLoading) return <Loading message="Loading items…" />;
+      if (error) return <ErrorAlert title="Failed to load items" details={String(error)} />;
             name={image._id}
             index={image._id}
             sinkName={sinkName}
