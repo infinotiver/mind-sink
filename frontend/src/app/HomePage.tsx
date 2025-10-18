@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
-import { useDocumentTitle } from "@/components/update-pagetitle";
-import { Card, CardContent } from "@/components/ui/card";
 
 export default function HomePage() {
   const scrollRef = useRef(null);
@@ -28,17 +26,6 @@ export default function HomePage() {
   const bgOpacity = useTransform(scrollY, [vh * 0.55, vh], [0, 1]);
   const bgScale = useTransform(scrollY, [vh * 0.55, vh], [1.05, 1]);
 
-  // Reveal the second half of the slogan after initial scroll
-  const secondLineOpacity = useTransform(
-    scrollY,
-    [vh * 0.15, vh * 0.45],
-    [0, 1]
-  );
-  const secondLineY = useTransform(scrollY, [vh * 0.15, vh * 0.45], [24, 0]);
-
-  // Set the document title
-  useDocumentTitle("Mind Sink");
-
   return (
     <div ref={scrollRef} className="relative bg-background">
       {/* Overlay */}
@@ -47,7 +34,8 @@ export default function HomePage() {
         style={{ clipPath, opacity: overlayOpacity }}
       >
         <h1 className="text-center text-3xl sm:text-5xl font-medium text-black px-4 leading-20">
-          Don’t let your thoughts
+          Don’t let your thoughts get{" "}
+          <span className="font-lora italic">lost</span>
         </h1>
       </motion.div>
 
@@ -57,37 +45,20 @@ export default function HomePage() {
       {/* Main content */}
       <motion.div style={{ opacity: bgOpacity, scale: bgScale }}>
         <Navbar />
-        <div className="flex flex-col items-center justify-center min-h-screen text-center gap-y-5 px-4 sm:px-8">
-          {/* Centered page title */}
-          <h1 className="text-[min(10vw,96px)] font-semibold mt-6 sm:mt-10">
-            Mind Sink
-          </h1>
-
-          {/* Second half of the slogan reveals after scrolling */}
-          <motion.p
-            style={{ opacity: secondLineOpacity, y: secondLineY }}
-            className="text-2xl sm:text-3xl text-muted-foreground"
-            aria-live="polite"
-          >
-            …let your thoughts <span className="font-lora italic">sink</span>
-          </motion.p>
-
-          {/* Value proposition using shadcn Card for uniformity */}
-          <Card className="w-full max-w-4xl">
-            <CardContent className="pt-6">
-              <p className="sm:px-4 text-lg/9 sm:text-base/8 text-foreground">
-                <span className="font-semibold">Mind Sink</span> is
-                <span className="chip">ad-free</span>,
-                <span className="chip">distraction-less</span>,
-                <span className="chip">Pinterest-like</span>
-                simple image and inspiration organizer with
-                <span className="chip">no infinite scroll</span>
-                so you focus on what matters.
-              </p>
-            </CardContent>
-          </Card>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-4 w-full">
+        <div className="flex flex-col items-center justify-center min-h-screen text-center gap-y-4 px-4 sm:px-8">
+          <h2 className="text-[min(8vw,84px)] font-medium mt-6 sm:mt-8 mb-3 sm:mb-4 flex items-center justify-center gap-3 md:gap-4">
+            Let your thoughts <span className="font-lora italic">sink</span>
+          </h2>
+          <div className="sm:px-8 text-lg/10 sm:text-md/8 text-foreground md:max-w-[60vw]">
+            Mind Sink is
+            <span className="chip">ad-free</span>,
+            <span className="chip">distraction-less</span>,
+            <span className="chip">Pinterest-like</span>
+            simple image and inspiration organizer with
+            <span className="chip">no infinite scroll</span>
+            so you focus on what matters
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
             <Link to={"/dashboard"}>
               <Button
                 variant="default"
@@ -103,11 +74,6 @@ export default function HomePage() {
                 Learn More
               </Button>
             </a>
-            <Link to={"/manifesto"}>
-              <Button variant="secondary" size="lg">
-                Read Manifesto
-              </Button>
-            </Link>
           </div>
           <div>
             The project is still in alpha phase of development. For a list of{" "}
@@ -121,15 +87,11 @@ export default function HomePage() {
           </div>
         </div>
         <div className="m-2 md:m-6 lg:m-8">
-          <Card className="overflow-hidden">
-            <CardContent className="p-0">
-              <img
-                src="/dashboard.png"
-                alt="Dashboard Demo"
-                className="max-w-full h-auto"
-              />
-            </CardContent>
-          </Card>
+          <img
+            src="/dashboard.png"
+            alt="Dashboard Demo"
+            className="rounded-lg shadow-lg max-w-full h-auto"
+          />
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 m-4 sm:m-6 text-sm text-muted-foreground text-center sm:text-left">
           Built with ❤️ using React, TypeScript, and Framer Motion by{" "}
