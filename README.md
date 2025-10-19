@@ -99,12 +99,3 @@ Backend (important paths)
 - 401 errors in the browser console usually mean the frontend isn't sending a valid token — either log in via OAuth or set `VITE_APP_TEST_ACCESS_TOKEN` for local dev.
 - `Invalid ObjectId` or Pydantic validation errors usually mean a string/ID shape mismatch; check `backend/models.py` validators and convert to `ObjectId` in DB queries.
 
----
-
-If you want, I can also:
-
-- add a minimal `Makefile` or npm scripts to run both frontend and backend in parallel for local development
-- remove checked-in `.env` files and add `.env.example` only (recommended for public repos)
-- add a short CONTRIBUTING.md with the common edits checklist
-
-Enjoy building! 🌊
