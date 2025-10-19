@@ -1,16 +1,11 @@
 import os
 import httpx
 import jwt
-from fastapi import APIRouter, Request, HTTPException, Depends
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import RedirectResponse
-from starlette.config import Config
-from starlette.requests import Request
 from datetime import datetime, timedelta
 from typing import Optional
-from . import crud
 from .database import users_collection
-
-from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 
@@ -87,10 +82,41 @@ async def auth_callback(request: Request):
 
         token_resp = await client.post(DISCORD_TOKEN_URL, data=data, headers=headers)
 
-        if token_resp.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to fetch access token")
+        try:
+            token_resp.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            # try to surface JSON error body if present
+            try:
+                err_body = token_resp.json()
+            except Exception:
+                err_body = token_resp.text
+            raise HTTPException(
+                status_code=token_resp.status_code,
+                detail=f"Discord token endpoint returned error: {err_body}",
+            ) from e
+        except httpx.RequestError as e:
+            # network / connection errors
+            raise HTTPException(
+                status_code=502, detail=f"Failed to contact Discord token endpoint: {str(e)}"
+            ) from e
 
-        access_token = token_resp.json()["access_token"]
+        # validate JSON payload and presence of access_token
+        try:
+            token_json = token_resp.json()
+        except ValueError:
+            raise HTTPException(
+                status_code=502, detail="Invalid JSON received from Discord token endpoint"
+            )
+
+        if "access_token" not in token_json:
+            # include any error details Discord returned
+            err_detail = token_json.get("error_description") or token_json.get("error") or token_json
+            raise HTTPException(
+                status_code=400,
+                detail=f"Discord token response missing access_token: {err_detail}",
+            )
+
+        access_token = token_json["access_token"]
 
         user_resp = await client.get(
             DISCORD_USER_API, headers={"Authorization": f"Bearer {access_token}"}
