@@ -14,18 +14,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {FiHome, FiStar, FiGrid, FiPlus, FiSettings, FiList } from "react-icons/fi";
+import { TbStar, TbLayoutDashboard, TbPlus, TbSettings, TbList, TbUpload } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
 const navMain = [
-  { title: "Home", url: "/dashboard", isActive: true, icon: () => <FiHome /> },
-  { title: "View Sinks", url: "/dashboard/all", icon: () => <FiGrid /> },
-  { title: "Favourites", url: "/dashboard/favourites", icon: () => <FiStar /> },
-  { title: "Create Sink", url: "/dashboard/create-sink", icon: () => <FiPlus /> },
-  { title: "Add Image", url: "/dashboard/add-item", icon: () => <FiPlus /> },
+  // { title: "Home", url: "/dashboard", isActive: true, icon: () => <TbHome /> },
+  { title: "View Sinks", url: "/dashboard/all", icon: () => <TbLayoutDashboard /> },
+  { title: "Favourites", url: "/dashboard/favourites", icon: () => <TbStar /> },
+  { title: "Create Sink", url: "/dashboard/create-sink", icon: () => <TbPlus /> },
+  { title: "Add Image", url: "/dashboard/add-item", icon: () => <TbUpload /> },
 ];
 const navSecondary = [
-  { title: "Settings", url: "/dashboard/settings", icon: () => <FiSettings /> },
+  { title: "Settings", url: "/dashboard/settings", icon: () => <TbSettings /> },
 ];
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
@@ -51,7 +51,7 @@ export function AppSidebar({ data, ...props }: AppSidebarProps) {
     projects: data.projects.map(({ name, url }) => ({
       name,
       url,
-      icon: () => <FiList />, // Default icon for projects
+      icon: () => <TbList />, // Default icon for projects
     })),
   };
 
@@ -61,13 +61,12 @@ export function AppSidebar({ data, ...props }: AppSidebarProps) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link to="/">
+              <Link to="/dashboard">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <img src="/ms.png" alt="" className="rounded" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Mind Sink</span>
-                  <span className="truncate text-xs">FREE</span>
+                <div className="grid flex-1 text-left text-lg leading-tight">
+                  <span className="truncate font-semibold">Mind Sink</span>
                 </div>
               </Link>
             </SidebarMenuButton>

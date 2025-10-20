@@ -1,6 +1,6 @@
 "use client";
 
-import { FiFolder, FiMoreHorizontal, FiType, FiTrash } from "react-icons/fi";
+import { TbFolder, TbDots, TbTypography, TbTrash } from "react-icons/tb";
 
 import {
   DropdownMenu,
@@ -45,7 +45,7 @@ export function NavProjects({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction showOnHover>
-                  <FiMoreHorizontal />
+                  <TbDots />
                   <span className="sr-only">More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
@@ -55,16 +55,16 @@ export function NavProjects({
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
-                  <FiFolder className="text-muted-foreground" />
+                  <TbFolder className="text-muted-foreground" />
                   <span>View Sink</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <FiType className="text-muted-foreground" />
+                  <TbTypography className="text-muted-foreground" />
                   <span>Rename Sink</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <FiTrash className="text-muted-foreground" />
+                  <TbTrash className="text-muted-foreground" />
                   <span>Delete Sink</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

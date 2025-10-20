@@ -1,6 +1,6 @@
 "use client";
 
-import { FiUser, FiLogOut, FiGithub, FiChevronDown } from "react-icons/fi";
+import { TbUser, TbLogout, TbBrandGithub, TbChevronDown } from "react-icons/tb";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -52,7 +52,7 @@ export function NavUser({
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <FiChevronDown className="ml-auto size-4" />
+              <TbChevronDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -77,12 +77,12 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link to={`/users/${user.id}`}>
-                  <FiUser />
+                  <TbUser />
                   Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <FiGithub />
+                <TbBrandGithub />
                 View source code
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -92,7 +92,7 @@ export function NavUser({
                 navigate("/");
               }}
             >
-              <FiLogOut />
+              <TbLogout />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
