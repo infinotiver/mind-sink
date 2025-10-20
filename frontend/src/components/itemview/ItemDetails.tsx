@@ -81,7 +81,7 @@ function ItemDetails({
       <div className="flex gap-4 p-4 border-t">
         <Button onClick={() => handleUpdate(item)}> Update</Button>
         <ConfirmDialog
-          title="Delete this image?"
+          title="Delete this item?"
           description="This will permanently remove the image from this sink. You can't undo this."
           confirmText="Delete Item"
           variant="destructive"
