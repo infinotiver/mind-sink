@@ -1,11 +1,116 @@
 {
+  "version": "2.0.0",
   "tasks": [
     {
       "type": "shell",
       "label": "install-backend-dependencies",
       "command": "pip",
       "args": ["install", "-r", "backend/requirements.txt"],
-      "problemMatcher": []
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "type": "shell",
+      "label": "install-frontend-dependencies",
+      "command": "npm",
+      "args": ["install"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "type": "shell",
+      "label": "run-backend-dev",
+      "command": "uvicorn",
+      "args": ["backend.main:app", "--reload", "--port", "8000"],
+      "problemMatcher": [],
+      "isBackground": true,
+      "group": "test"
+    },
+    {
+      "type": "shell",
+      "label": "run-frontend-dev",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": [],
+      "isBackground": true,
+      "group": "test"
+    },
+    {
+      "type": "shell",
+      "label": "lint-backend",
+      "command": "flake8",
+      "args": ["backend", "--max-line-length=120"],
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "type": "shell",
+      "label": "lint-frontend",
+      "command": "npm",
+      "args": ["run", "lint"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": ["$eslint-stylish"],
+      "group": "test"
+    },
+    {
+      "type": "shell",
+      "label": "format-backend",
+      "command": "black",
+      "args": ["backend"],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "type": "shell",
+      "label": "build-frontend",
+      "command": "npm",
+      "args": ["run", "build"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
+      "label": "typecheck-frontend",
+      "command": "npx",
+      "args": ["tsc", "--noEmit"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": ["$tsc"],
+      "group": "test"
+    },
+    {
+      "type": "shell",
+      "label": "pre-commit-checks",
+      "dependsOn": [
+        "lint-backend",
+        "format-backend",
+        "lint-frontend",
+        "typecheck-frontend"
+      ],
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "type": "shell",
+      "label": "start-all-dev",
+      "dependsOn": ["run-backend-dev", "run-frontend-dev"],
+      "problemMatcher": [],
+      "group": "test"
     }
   ]
 }

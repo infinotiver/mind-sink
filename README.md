@@ -94,8 +94,37 @@ Backend (important paths)
 3. Add request/response Pydantic models to `backend/models.py` if necessary.
 4. Add a frontend API wrapper in `frontend/src/api/` and a React Query hook or call site in the appropriate page/component.
 
+## CI/CD & DevOps
+
+Mind Sink uses GitHub Actions for automated testing and deployment:
+
+- **Pull Request Checks** - Automated linting, type checking, and builds run on every PR
+- **Automatic Deployment** - Merges to `main` trigger deployment to Render
+- **Branch Protection** - Main branch requires passing CI checks before merge
+
+**Quick Start:**
+
+1. Read `.github/SETUP_CHECKLIST.md` for initial setup
+2. See `.github/QUICK_REFERENCE.md` for daily workflow commands
+3. Full documentation in `.github/CICD_GUIDE.md`
+
+**Development Workflow:**
+
+```powershell
+# Create feature branch
+git checkout -b feature/your-feature
+
+# Make changes, commit
+git commit -m "feat: add description"
+
+# Push and open PR
+git push origin feature/your-feature
+```
+
+CI checks will run automatically. When checks pass and PR is approved, merge to `main` to deploy to production.
+
 ## Troubleshooting
 
 - 401 errors in the browser console usually mean the frontend isn't sending a valid token — either log in via OAuth or set `VITE_APP_TEST_ACCESS_TOKEN` for local dev.
 - `Invalid ObjectId` or Pydantic validation errors usually mean a string/ID shape mismatch; check `backend/models.py` validators and convert to `ObjectId` in DB queries.
-
+- CI/CD issues: Check `.github/workflows/` files and GitHub Actions tab for logs.
