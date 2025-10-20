@@ -123,8 +123,4 @@ git push origin feature/your-feature
 
 CI checks will run automatically. When checks pass and PR is approved, merge to `main` to deploy to production.
 
-## Troubleshooting
 
-- 401 errors in the browser console usually mean the frontend isn't sending a valid token — either log in via OAuth or set `VITE_APP_TEST_ACCESS_TOKEN` for local dev.
-- `Invalid ObjectId` or Pydantic validation errors usually mean a string/ID shape mismatch; check `backend/models.py` validators and convert to `ObjectId` in DB queries.
-- CI/CD issues: Check `.github/workflows/` files and GitHub Actions tab for logs.
