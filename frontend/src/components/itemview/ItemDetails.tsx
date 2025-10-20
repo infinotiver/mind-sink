@@ -1,13 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import TagsInput from "@/components/common/TagsInput";
-import { FiCalendar, FiRefreshCcw, FiUser, FiLink } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
-import { Label } from "../ui/label";
-import type { Item } from "@/api/items";
-import { detectSource } from "@/utils/detectSource"; // Import detectSource
-import type { Sink } from "@/api/sinks";
-import type { UserProfile } from "@/api/profile";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import TagsInput from '@/components/common/TagsInput';
+import { FiCalendar, FiRefreshCcw, FiUser, FiLink } from 'react-icons/fi';
+import { Button } from '@/components/ui/button';
+import { Label } from '../ui/label';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import type { Item } from '@/api/items';
+import { detectSource } from '@/utils/detectSource'; // Import detectSource
+import type { Sink } from '@/api/sinks';
+import type { UserProfile } from '@/api/profile';
+import { Link } from 'react-router-dom';
 
 function ItemDetails({
   item,
@@ -52,9 +53,7 @@ function ItemDetails({
         <a href={item.content}>
           <div className="flex items-center gap-2 my-2 text-sm text-foreground hover:text-blue-400">
             <FiLink />
-            {item.content.length > 50
-              ? `${item.content.substring(0, 50)}...`
-              : item.content}
+            {item.content.length > 50 ? `${item.content.substring(0, 50)}...` : item.content}
           </div>
         </a>
         <TagsInput
@@ -81,9 +80,14 @@ function ItemDetails({
       </CardContent>
       <div className="flex gap-4 p-4 border-t">
         <Button onClick={() => handleUpdate(item)}> Update</Button>
-        <Button variant="destructive" onClick={() => handleDelete(item._id)}>
-          Delete Item
-        </Button>
+        <ConfirmDialog
+          title="Delete this item?"
+          description="This will permanently remove the image from this sink. You can't undo this."
+          confirmText="Delete Item"
+          variant="destructive"
+          trigger={<Button variant="destructive">Delete Item</Button>}
+          onConfirm={() => handleDelete(item._id)}
+        />
       </div>
     </Card>
   );
