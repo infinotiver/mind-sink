@@ -1,0 +1,56 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend to Render
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render backend deployment
+        run: |
+          curl -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}"
+          echo "✅ Backend deployment triggered on Render"
+
+      - name: Wait for deployment
+        run: sleep 30
+
+  deploy-frontend:
+    name: Deploy Frontend to Render
+    runs-on: ubuntu-latest
+    needs: deploy-backend # Deploy frontend after backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render frontend deployment
+        run: |
+          curl -X POST "${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}"
+          echo "✅ Frontend deployment triggered on Render"
+
+  notify:
+    name: Deployment Notification
+    runs-on: ubuntu-latest
+    needs: [deploy-backend, deploy-frontend]
+    if: always()
+
+    steps:
+      - name: Summary
+        run: |
+          echo "🚀 Deployment Summary"
+          echo "Backend: ${{ needs.deploy-backend.result }}"
+          echo "Frontend: ${{ needs.deploy-frontend.result }}"
+          if [ "${{ needs.deploy-backend.result }}" == "success" ] && [ "${{ needs.deploy-frontend.result }}" == "success" ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment had issues"
+            exit 1
+          fi
