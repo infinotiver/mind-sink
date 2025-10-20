@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import ErrorAlert from '@/components/ui/error-alert';
 import { Separator } from '@/components/ui/separator';
+import { ShareDialog } from '@/components/ui/share-dialog';
 
 export default function ProfilePage() {
   const { userID } = useParams<{ userID: string }>();
@@ -50,10 +51,17 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <Button variant="secondary">
-        <FiShare />
-        Share Account
-      </Button>
+      <ShareDialog
+        title="Share profile"
+        description="Share this profile with anyone. All profiles are public by default."
+        url={`${window.location.origin}/users/${profile.user_id}`}
+        trigger={
+          <Button variant="secondary">
+            <FiShare />
+            Share Account
+          </Button>
+        }
+      />
       <div className="mt-6 w-full text-center">
         <p className="text-sm font-medium text-muted-foreground">
           All accounts are public by default.
