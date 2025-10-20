@@ -1,15 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getItemsBySink, type Item } from "@/api/items";
-import { deleteSink, getSink } from "@/api/sinks";
-import type { Sink } from "@/api/sinks";
-import GalleryItem from "@/components/masonry/galleryItem";
-import { getUserProfile } from "@/api/profile";
-import { FiEye } from "react-icons/fi";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import Loading from "@/components/ui/loading";
-import ErrorAlert from "@/components/ui/error-alert";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getItemsBySink, type Item } from '@/api/items';
+import { deleteSink, getSink } from '@/api/sinks';
+import type { Sink } from '@/api/sinks';
+import GalleryItem from '@/components/masonry/galleryItem';
+import { getUserProfile } from '@/api/profile';
+import { FiEye } from 'react-icons/fi';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import Loading from '@/components/ui/loading';
+import ErrorAlert from '@/components/ui/error-alert';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
@@ -21,9 +22,8 @@ export default function BoardViewPage() {
     isLoading: isSinkLoading,
     error: sinkError,
   } = useQuery<Sink>({
-    queryKey: ["sink", sinkID],
-    queryFn: () =>
-      sinkID ? getSink(sinkID) : Promise.reject("Sink not found"),
+    queryKey: ['sink', sinkID],
+    queryFn: () => (sinkID ? getSink(sinkID) : Promise.reject('Sink not found')),
     enabled: !!sinkID,
   });
 
@@ -32,21 +32,18 @@ export default function BoardViewPage() {
     isLoading: areItemsLoading,
     error: itemsError,
   } = useQuery({
-    queryKey: ["items", sinkID],
-    queryFn: () =>
-      sinkID ? getItemsBySink(sinkID) : Promise.reject("Items not found"),
+    queryKey: ['items', sinkID],
+    queryFn: () => (sinkID ? getItemsBySink(sinkID) : Promise.reject('Items not found')),
     enabled: !!sinkID,
   });
 
   const { data: userData, error: userError } = useQuery({
-    queryKey: ["users", sink?.user_id],
-    queryFn: () =>
-      sink ? getUserProfile(sink?.user_id) : Promise.reject("Sink not found"),
+    queryKey: ['users', sink?.user_id],
+    queryFn: () => (sink ? getUserProfile(sink?.user_id) : Promise.reject('Sink not found')),
     enabled: !!sink,
   });
 
-  if (isSinkLoading || areItemsLoading)
-    return <Loading message="Loading sink…" />;
+  if (isSinkLoading || areItemsLoading) return <Loading message="Loading sink…" />;
 
   if (sinkError || itemsError || userError)
     return (
@@ -71,14 +68,11 @@ export default function BoardViewPage() {
           {userData?.username}
         </div>
         <p className="text-sm text-muted-foreground">
-          {sink?.description || "No description available"}
+          {sink?.description || 'No description available'}
         </p>
         <div className="flex flex-wrap gap-2 mt-2">
           {sink?.tags?.map((tag, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-primary text-foreground text-sm rounded-full"
-            >
+            <span key={index} className="px-2 py-1 bg-primary text-foreground text-sm rounded-full">
               {tag}
             </span>
           ))}
@@ -90,17 +84,19 @@ export default function BoardViewPage() {
             {sink?.visibility}
           </div>
           <div className="flex flex-col items-center justify-center">
-            <Button
-              variant={"destructive"}
-              onClick={() => {
-                deleteSink(sink ? sink._id : "");
-                queryClient.invalidateQueries();
-                alert("Sink deleted successfully");
-                navigate("/dashboard");
+            <ConfirmDialog
+              title="Delete this sink?"
+              description="This will permanently delete the sink and its items. This action cannot be undone."
+              confirmText="Delete Sink"
+              variant="destructive"
+              trigger={<Button variant="destructive">Delete Sink</Button>}
+              onConfirm={async () => {
+                if (!sink?._id) return;
+                await deleteSink(sink._id);
+                await queryClient.invalidateQueries();
+                navigate('/dashboard');
               }}
-            >
-              Delete Sink
-            </Button>
+            />
           </div>
         </div>
       </div>
@@ -108,8 +104,8 @@ export default function BoardViewPage() {
         {items?.map((item: Item) => (
           <GalleryItem
             key={item._id}
-            author={sink?.user_id || ""}
-            author_id={sink?.user_id || ""}
+            author={sink?.user_id || ''}
+            author_id={sink?.user_id || ''}
             path={item.content}
             name={item._id}
             index={item._id}
