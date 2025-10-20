@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { TbStar, TbLayoutDashboard, TbPlus, TbSettings, TbList, TbUpload } from "react-icons/tb";
 import { Link } from "react-router-dom";
-
+import { Separator } from "../ui/separator";
 const navMain = [
   // { title: "Home", url: "/dashboard", isActive: true, icon: () => <TbHome /> },
   { title: "View Sinks", url: "/dashboard/all", icon: () => <TbLayoutDashboard /> },
@@ -75,7 +75,9 @@ export function AppSidebar({ data, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
+        <Separator className="mt-1" />
         <NavProjects projects={sidebarData.projects} />
+        <Separator className="mt-1" />
         <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
