@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import ErrorAlert from '@/components/ui/error-alert';
-import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { ConfirmDialog } from '@/components/dialogs/confirm-dialog';
 
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
@@ -65,7 +65,7 @@ export default function BoardViewPage() {
         </p>
         <div className="flex gap-2 items-center text-md text-foreground">
           <Avatar>
-            <AvatarImage src={userData?.avatar_url} className="border-muted"/>
+            <AvatarImage src={userData?.avatar_url} className="border-muted" />
             <AvatarFallback>XX</AvatarFallback>
           </Avatar>
           {userData?.username}

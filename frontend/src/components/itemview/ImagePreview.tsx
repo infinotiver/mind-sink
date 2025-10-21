@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import type { Item } from '@/api/items';
 import { FiDownload, FiShare2, FiInfo } from 'react-icons/fi';
-import { ShareDialog } from '@/components/ui/share-dialog';
+import { ShareDialog } from '@/components/dialogs/share-dialog';
 import { toast } from 'sonner';
 function ImagePreview({ item }: { item: Item }) {
   const shareUrl = `${window.location.origin}/items/${item._id}`;
@@ -17,8 +17,8 @@ function ImagePreview({ item }: { item: Item }) {
       a.click();
       a.remove();
     } catch {
-      toast("Unable to download file", {
-        description: "Please try again later.",
+      toast('Unable to download file', {
+        description: 'Please try again later.',
       });
     }
   }, [item.content, item._id]);
