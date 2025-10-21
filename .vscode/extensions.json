@@ -1,26 +1,17 @@
 {
   "recommendations": [
-    // Essential extensions
+    // Python essentials
     "ms-python.python",
     "ms-python.black-formatter",
-    "ms-python.flake8",
+
+    // JS/TS/React essentials
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
 
-    // Git & GitHub
-    "github.vscode-pull-request-github",
+    // GitHub integration
     "eamodio.gitlens",
 
-    // YAML for GitHub Actions
-    "redhat.vscode-yaml",
-
-    // Utilities
-    "usernamehw.errorlens",
-    "streetsidesoftware.code-spell-checker",
-    "wayou.vscode-todo-highlight",
-
-    // React/TypeScript
-    "dsznajder.es7-react-js-snippets",
-    "bradlc.vscode-tailwindcss"
+    // React/TypeScript snippets
+    "dsznajder.es7-react-js-snippets"
   ]
 }
