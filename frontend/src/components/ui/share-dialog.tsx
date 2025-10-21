@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import * as React from 'react';
 import { FiCheck, FiCopy } from 'react-icons/fi';
-
+import { toast } from 'sonner';
 type ShareDialogProps = {
   title?: string;
   description?: string;
@@ -35,7 +35,7 @@ export function ShareDialog({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      toast('Failed to copy link', { description: String(err) });
     }
   };
 
