@@ -6,7 +6,7 @@ import { FiLink } from "react-icons/fi";
 import type { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
 import { useCreateItem } from "@/api/items";
-
+import { toast } from "sonner";
 export default function AddItemPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -31,11 +31,11 @@ export default function AddItemPage() {
     };
     createMutation.mutate(newItem, {
       onSuccess: () => {
-        alert("Item created!");
+        toast.success("Item created!");
         navigate("/dashboard");
       },
       onError: (err) => {
-        alert("Failed to create item: " + err.message);
+        toast.error("Failed to create item: " + err.message);
       },
     });
   };
@@ -59,7 +59,7 @@ export default function AddItemPage() {
   };
 
   return (
-    <div className="flex min-w-full">
+    <div className="flex flex-col min-w-full">
       <PreviewItem imageLink={itemLink} />
       <ItemCreate
         selectedTags={selectedTags}

@@ -98,7 +98,7 @@ export default function HomePage() {
             className="rounded-lg shadow-lg max-w-full h-auto"
           />
         </div>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 m-4 sm:m-6 text-sm text-muted-foreground text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 m-4 sm:m-6 text-xs text-muted-foreground text-center sm:text-left">
           Built with ❤️ using React, TypeScript, and Framer Motion by{" "}
           <a
             href="https://github.com/infinotiver"

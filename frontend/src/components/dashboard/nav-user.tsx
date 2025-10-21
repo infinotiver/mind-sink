@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { TbUser, TbLogout, TbBrandGithub, TbChevronDown } from "react-icons/tb";
+import { TbUser, TbLogout, TbBrandGithub, TbChevronDown } from 'react-icons/tb';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,15 +12,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthProvider";
+} from '@/components/ui/sidebar';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthProvider';
 
 export function NavUser({
   user,
@@ -57,7 +58,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -86,15 +87,22 @@ export function NavUser({
                 View source code
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuItem
-              onClick={() => {
+            <ConfirmDialog
+              title="Log out of Mind Sink?"
+              description="You'll need to log in again to access your sinks and items."
+              confirmText="Log out"
+              variant="destructive"
+              trigger={
+                <DropdownMenuItem onSelect={e => e.preventDefault()}>
+                  <TbLogout />
+                  Log out
+                </DropdownMenuItem>
+              }
+              onConfirm={() => {
                 logout();
-                navigate("/");
+                navigate('/');
               }}
-            >
-              <TbLogout />
-              Log out
-            </DropdownMenuItem>
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
