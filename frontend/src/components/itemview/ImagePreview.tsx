@@ -17,7 +17,7 @@ function ImagePreview({ item }: { item: Item }) {
       a.click();
       a.remove();
     } catch {
-      toast("Unable to download to file", {
+      toast("Unable to download file", {
         description: "Please try again later.",
       });
     }
