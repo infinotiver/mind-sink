@@ -37,7 +37,7 @@ function ImagePreview({ item }: { item: Item }) {
           description="Share this image with anyone. They'll be able to view it if they have access."
           url={shareUrl}
           trigger={
-            <Button size="icon" variant="secondary" aria-label="Share">
+            <Button size="icon" variant="outline" aria-label="Share">
               <FiShare2 size={18} />
             </Button>
           }
