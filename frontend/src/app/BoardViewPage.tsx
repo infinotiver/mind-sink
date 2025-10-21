@@ -58,8 +58,11 @@ export default function BoardViewPage() {
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 bg-background rounded-md shadow-md mb-4">
-        <div className="text-2xl text-foreground">{sink?.title}</div>
+      <div className="flex flex-col justify-center items-center gap-2 p-4 bg-background rounded-md shadow-md mb-4">
+        <div className="text-2xl text-foreground font-lora">{sink?.title}</div>
+        <p className="text-sm text-muted-foreground italic font-lora">
+          {sink?.description || 'No description available'}
+        </p>
         <div className="flex gap-2 items-center text-md text-foreground">
           <Avatar>
             <AvatarImage src={userData?.avatar_url} />
@@ -67,9 +70,6 @@ export default function BoardViewPage() {
           </Avatar>
           {userData?.username}
         </div>
-        <p className="text-sm text-muted-foreground">
-          {sink?.description || 'No description available'}
-        </p>
         <div className="flex flex-wrap gap-2 mt-2">
           {sink?.tags?.map((tag, index) => (
             <span key={index} className="px-2 py-1 bg-primary text-foreground text-sm rounded-full">
