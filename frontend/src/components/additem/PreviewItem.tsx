@@ -5,7 +5,7 @@ function PreviewItem({ imageLink }: { imageLink: string }) {
       <img
         src={imageLink}
         alt="Preview"
-        className="rounded-lg shadow-lg object-contain max-h-100 max-w-80"
+        className="rounded-lg shadow-lg object-contain max-h-80 max-w-60"
       />
       ) : (
       <span className="text-center text-muted-foreground">Enter a image link to import image</span>
