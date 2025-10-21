@@ -8,7 +8,7 @@ function PreviewItem({ imageLink }: { imageLink: string }) {
         className="rounded-lg shadow-lg object-contain max-h-80 max-w-60"
       />
       ) : (
-      <span className="text-center text-muted-foreground">Enter a image link to import image</span>
+      <span className="text-center text-muted-foreground">Enter an image link to import image</span>
       )}
     </div>
   );
