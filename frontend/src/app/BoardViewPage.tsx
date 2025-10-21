@@ -65,7 +65,7 @@ export default function BoardViewPage() {
         </p>
         <div className="flex gap-2 items-center text-md text-foreground">
           <Avatar>
-            <AvatarImage src={userData?.avatar_url} />
+            <AvatarImage src={userData?.avatar_url} className="border-muted"/>
             <AvatarFallback>XX</AvatarFallback>
           </Avatar>
           {userData?.username}

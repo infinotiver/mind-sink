@@ -11,7 +11,6 @@ import ProfilePage from './app/ProfilePage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthProvider';
 import AuthCallbackPage from './app/AuthCallbackPage';
-import ViewSinksPage from './app/ViewSinksPage';
 import ManifestoPage from './app/ManifestoPage';
 
 function App() {
@@ -42,7 +41,6 @@ function App() {
         { path: 'sink/:sinkID', element: <BoardViewPage /> },
         // create-sink route removed; creation is available via sidebar dialog
         { path: 'items/:itemID', element: <ItemViewPage /> },
-        { path: 'all', element: <ViewSinksPage /> }, // Placeholder for "View Sinks"
         { path: 'favourites', element: <DashboardHomePage /> }, // Placeholder for "Favourites"
         // add-item route removed; add image is available via sidebar dialog
       ],
