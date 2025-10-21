@@ -32,12 +32,12 @@ export default function ProfilePage() {
     );
   return (
     <div className="flex flex-col items-center p-6 gap-y-2">
-      <div className="w-32 h-32 bg-muted rounded-lg flex items-center justify-center">
+      <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
         <span className="text-muted-foreground">
           <img src={profile.avatar_url} alt="No Profile Pic" className="rounded-4xl" />
         </span>
       </div>
-      {/* <div> */}
+
       <h1 className="text-2xl font-semibold mt-4 text-primary italic font-lora">
         {profile.username}
       </h1>
