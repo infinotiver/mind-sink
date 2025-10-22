@@ -105,6 +105,7 @@ class SinkCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     description: str = Field(None, max_length=300)
     visibility: Optional[str] = Field(default="private")
+    tags: Optional[List[str]] = []
 
     @field_validator("title")
     def title_not_empty(cls, v: Any, info: ValidationInfo) -> Any:
