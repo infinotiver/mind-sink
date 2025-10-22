@@ -130,7 +130,7 @@ async def api_update_sink(
 ):
     try:
         # board can be a dict with optional keys: title, description, visibility, tags
-        updated_board = await update_sink(board_id, user_id, board)
+        updated_board = await update_sink(board_id, board, user_id)
         if not updated_board:
             raise HTTPException(status_code=404, detail="Board not found")
         return updated_board
