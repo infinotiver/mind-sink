@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useTheme } from '@/components/theme-provider';
 import useShortcuts from '@/components/shortcuts/useShortcuts';
-import { Kbd } from '@/components/ui/kbd';
+
 
 type Mode = 'light' | 'dark' | 'system';
 
