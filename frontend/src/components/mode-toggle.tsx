@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { TbMoon, TbSun } from 'react-icons/tb';
 
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,7 @@ import useShortcuts from '@/components/shortcuts/useShortcuts';
 
 type Mode = 'light' | 'dark' | 'system';
 
-export function ModeToggle(): JSX.Element {
+export function ModeToggle(): ReactElement {
   const { theme, setTheme } = useTheme();
   const shortcuts = useShortcuts();
 

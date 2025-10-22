@@ -24,7 +24,6 @@ export default function LoginPage() {
           size="lg"
           className="flex items-center gap-2 w-full max-w-xs"
           asChild
-          shortcut="Ctrl+L"
         >
           <Link to={`${import.meta.env.VITE_API_URL}/auth/login`}>
             <FaDiscord />

@@ -43,12 +43,14 @@ function Button({
   size,
   asChild = false,
   shortcut,
+  showShortcutInline = false,
   children,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
     shortcut?: string;
+    showShortcutInline?: boolean;
   }) {
   const Comp = asChild ? Slot : 'button';
 
@@ -66,7 +68,7 @@ function Button({
     <span className="flex items-center gap-2">
       {children}
       {/* show inline Kbd for outline variant */}
-      {shortcut && variant === 'outline' ? (
+      {shortcut && variant === 'outline' && showShortcutInline ? (
         <span className="ml-1 flex">{renderKbd(shortcut)}</span>
       ) : null}
     </span>

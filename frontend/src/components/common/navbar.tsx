@@ -11,8 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthProvider';
 import { FiMenu } from 'react-icons/fi';
-import { useEffect } from 'react';
-import useShortcuts from '@/components/shortcuts/useShortcuts';
+
 import {
   Sheet,
   SheetContent,
@@ -25,13 +24,8 @@ import {
 export default function Navbar() {
   const { user } = useAuth();
   const isLoggedIn = !!user;
-  const shortcuts = useShortcuts();
 
-  useEffect(() => {
-    const goDashboard = () => window.location.assign(isLoggedIn ? '/dashboard' : '/login');
-    shortcuts.register('d', goDashboard, 'Open Dashboard / Login (Ctrl+D)');
-    return () => shortcuts.unregister('d', goDashboard);
-  }, [isLoggedIn, shortcuts]);
+  // no-op: keyboard registrations handled elsewhere
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex items-center w-[95%] max-w-4xl md:w-auto p-2 px-3 py-2 shadow-md rounded-2xl border bg-accent/20 md:bg-accent/70 backdrop-blur-lg">
       {/* Mobile: hamburger left + auth button right */}
@@ -78,7 +72,7 @@ export default function Navbar() {
           </SheetContent>
         </Sheet>
         <Link to={isLoggedIn ? '/dashboard' : '/login'}>
-          <Button className="rounded-lg px-3" variant="default" shortcut="Ctrl+D">
+          <Button className="rounded-lg px-3" variant="default">
             {isLoggedIn ? 'Open Dashboard' : 'Login'}
           </Button>
         </Link>
