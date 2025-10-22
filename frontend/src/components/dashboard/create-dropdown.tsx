@@ -31,8 +31,10 @@ export default function CreateDropdown({
           </DropdownMenuTrigger>
         </TooltipTrigger>
         <TooltipContent>
-          Press{" "}
-          <Kbd>C</Kbd>
+          <div className="flex items-center gap-1">
+            Press <Kbd>Ctrl / ⌘</Kbd>+
+            <Kbd>C</Kbd>
+          </div>
         </TooltipContent>
       </Tooltip>
       <DropdownMenuContent>
@@ -44,7 +46,10 @@ export default function CreateDropdown({
               <div className="text-xs text-muted-foreground">
                 Start a board to organize your ideas.
               </div>
-              <Kbd className="ml-2">C</Kbd>
+              <div className="flex items-center gap-1">
+                <Kbd>Ctrl / ⌘</Kbd>
+                <Kbd>C</Kbd>
+              </div>
             </div>
           </div>
         </DropdownMenuItem>
@@ -54,7 +59,10 @@ export default function CreateDropdown({
             <span className="font-semibold">Add Image</span>
             <div className="flex items-center gap-2">
               <div className="text-xs text-muted-foreground">Upload an item to your sinks.</div>
-              <Kbd>I</Kbd>
+              <div className="flex items-center gap-1">
+                <Kbd>Ctrl / ⌘</Kbd>
+                <Kbd>I</Kbd>
+              </div>
             </div>
           </div>
         </DropdownMenuItem>

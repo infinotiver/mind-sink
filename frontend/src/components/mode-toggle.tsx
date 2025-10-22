@@ -34,7 +34,7 @@ export function ModeToggle(): JSX.Element {
       setMode(next);
       setTheme(next);
     };
-    shortcuts.register('t', toggle, 'Toggle theme');
+    shortcuts.register('t', toggle, 'Toggle theme (Ctrl+T)');
     return () => shortcuts.unregister('t', toggle);
   }, [mode, setTheme, shortcuts]);
 
@@ -55,6 +55,7 @@ export function ModeToggle(): JSX.Element {
           size="lg"
           className="flex items-center justify-center gap-2"
           aria-label="Toggle theme"
+          shortcut="Ctrl+T"
         >
           {/* icon container - fixed size so icons overlap cleanly */}
           <span className="relative inline-flex w-5 h-5">
@@ -79,7 +80,8 @@ export function ModeToggle(): JSX.Element {
           </span>
 
           <span className="sr-only">Toggle theme</span>
-          <Kbd>T</Kbd>
+          <div className="flex items-center gap-1">
+          </div>
         </Button>
       </DropdownMenuTrigger>
 

@@ -34,8 +34,8 @@ export default function CreateActions() {
     // register shortcuts
     const openCreate = () => setOpenCreate(true);
     const openAdd = () => setOpenAddItem(true);
-    shortcuts.register('c', openCreate, 'Create Sink');
-    shortcuts.register('i', openAdd, 'Add Image');
+    shortcuts.register('c', openCreate, 'Create Sink (Ctrl+C)');
+    shortcuts.register('i', openAdd, 'Add Image (Ctrl+I)');
     return () => {
       shortcuts.unregister('c', openCreate);
       shortcuts.unregister('i', openAdd);

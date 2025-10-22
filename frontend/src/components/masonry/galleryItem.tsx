@@ -35,7 +35,7 @@ export default function GalleryItem({
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent backdrop-blur-sm rounded-lg" />
         <div className="relative z-10 flex flex-col w-full justify-between items-start">
           <div className="mb-2">
-            <Button variant="ghost" size="sm" className="px-2 py-1" asChild>
+            <Button variant="ghost" size="sm" className="px-2 py-1" asChild shortcut="Ctrl+Enter">
               <Link
                 to={`/dashboard/items/${index}`}
                 className={`flex items-center space-x-2 ${compact ? 'text-[10px]' : 'text-sm'} text-foreground`}

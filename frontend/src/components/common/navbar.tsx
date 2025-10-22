@@ -29,7 +29,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const goDashboard = () => window.location.assign(isLoggedIn ? '/dashboard' : '/login');
-    shortcuts.register('d', goDashboard, 'Open Dashboard / Login');
+    shortcuts.register('d', goDashboard, 'Open Dashboard / Login (Ctrl+D)');
     return () => shortcuts.unregister('d', goDashboard);
   }, [isLoggedIn, shortcuts]);
   return (
@@ -78,7 +78,7 @@ export default function Navbar() {
           </SheetContent>
         </Sheet>
         <Link to={isLoggedIn ? '/dashboard' : '/login'}>
-          <Button className="rounded-lg px-3" variant="default">
+          <Button className="rounded-lg px-3" variant="default" shortcut="Ctrl+D">
             {isLoggedIn ? 'Open Dashboard' : 'Login'}
           </Button>
         </Link>

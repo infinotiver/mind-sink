@@ -79,13 +79,19 @@ function ItemDetails({
         </div>
       </CardContent>
       <div className="flex gap-4 p-4 border-t">
-        <Button onClick={() => handleUpdate(item)}> Update</Button>
+        <Button onClick={() => handleUpdate(item)} shortcut="Ctrl+U">
+          Update
+        </Button>
         <ConfirmDialog
           title="Delete this item?"
           description="This will permanently remove the image from this sink. You can't undo this."
           confirmText="Delete Item"
           variant="destructive"
-          trigger={<Button variant="destructive">Delete Item</Button>}
+          trigger={
+            <Button variant="destructive" shortcut="Ctrl+Delete">
+              Delete Item
+            </Button>
+          }
           onConfirm={() => handleDelete(item._id)}
         />
       </div>

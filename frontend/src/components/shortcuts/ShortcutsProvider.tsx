@@ -12,13 +12,19 @@ export function ShortcutsProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      const key = e.key.toLowerCase();
+      const rawKey = e.key;
+      const key = rawKey.toLowerCase();
+
       // Show help with '?'
-      if (e.key === '?') {
+      if (rawKey === '?') {
         e.preventDefault();
         setOpen(true);
         return;
       }
+
+      // Require Ctrl or Cmd modifier for registered shortcuts so they don't trigger while typing
+      if (!e.ctrlKey && !e.metaKey) return;
+
       const setOf = handlers.current.get(key);
       if (setOf) {
         e.preventDefault();
@@ -50,37 +56,40 @@ export function ShortcutsProvider({ children }: { children: React.ReactNode }) {
     description,
   }));
 
-return (
+  return (
     <ShortcutsContext.Provider value={{ register, unregister, list }}>
-        {children}
+      {children}
 
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Keyboard Shortcuts</DialogTitle>
-                    <DialogDescription>
-                        Press keys to trigger actions. Press "?" to open this help.
-                    </DialogDescription>
-                </DialogHeader>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Keyboard Shortcuts</DialogTitle>
+            <DialogDescription>
+              Press keys to trigger actions. Press "?" to open this help.
+            </DialogDescription>
+          </DialogHeader>
 
-                <div className="flex flex-col gap-2 mt-4">
-                    {list.map(s => (
-                        <div key={s.key} className="flex items-center justify-between">
-                            <div className="text-sm text-muted-foreground">{s.description}</div>
-                            <Kbd>{s.key.toUpperCase()}</Kbd>
-                        </div>
-                    ))}
+          <div className="flex flex-col gap-2 mt-4">
+            {list.map(s => (
+              <div key={s.key} className="flex items-center justify-between">
+                <div className="text-sm text-muted-foreground">{s.description}</div>
+                <div className="flex items-center gap-1">
+                  <Kbd>Ctrl / ⌘</Kbd>
+                  <Kbd>{s.key.toUpperCase()}</Kbd>
                 </div>
+              </div>
+            ))}
+          </div>
 
-                <div className="mt-4 text-right">
-                    <Button variant={"destructive"} onClick={() => setOpen(false)}>
-                        Close
-                    </Button>
-                </div>
-            </DialogContent>
-        </Dialog>
+          <div className="mt-4 text-right">
+            <Button variant={'destructive'} onClick={() => setOpen(false)}>
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </ShortcutsContext.Provider>
-);
+  );
 }
 
 export default ShortcutsProvider;

@@ -45,8 +45,8 @@ export function NavUser({
       logout();
       navigate('/');
     };
-    shortcuts.register('p', openProfile, 'Open Profile');
-    shortcuts.register('o', doLogout, 'Log out');
+    shortcuts.register('p', openProfile, 'Open Profile (Ctrl+P)');
+    shortcuts.register('o', doLogout, 'Log out (Ctrl+O)');
     return () => {
       shortcuts.unregister('p', openProfile);
       shortcuts.unregister('o', doLogout);

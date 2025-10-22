@@ -57,7 +57,7 @@ export default function ProfilePage() {
         description="Share this profile with anyone. All profiles are public by default."
         url={`${window.location.origin}/users/${profile.user_id}`}
         trigger={
-          <Button variant="secondary">
+          <Button variant="secondary" shortcut="Ctrl+S">
             <FiShare />
             Share Account
           </Button>
@@ -75,4 +75,3 @@ export default function ProfilePage() {
     </div>
   );
 }
-
