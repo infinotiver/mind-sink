@@ -17,7 +17,7 @@ export default function UserSinksGrid({ userId }: { userId: string }) {
     enabled: !!userId,
   });
 
-  if (isLoading) return <Loading message="Loading sinks…" />;
+  if (isLoading) return <Loading message="Loading sinks..." />;
   if (isError) return <ErrorAlert title="Error loading sinks" />;
   if (!userSinks || userSinks.length === 0) {
     return (
