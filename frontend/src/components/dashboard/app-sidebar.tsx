@@ -14,13 +14,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { TbStar, TbLayoutDashboard, TbSettings, TbList } from 'react-icons/tb';
+import { TbStar, TbSettings, TbList } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import CreateActions from '@/components/dashboard/create-actions';
 import { Separator } from '../ui/separator';
 
 const navMain = [
-  { title: 'View Sinks', url: '/dashboard/all', icon: () => <TbLayoutDashboard /> },
   { title: 'Favourites', url: '/dashboard/favourites', icon: () => <TbStar /> },
 ];
 

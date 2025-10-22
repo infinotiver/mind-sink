@@ -3,7 +3,7 @@ import TagsInput from '@/components/common/TagsInput';
 import { FiCalendar, FiRefreshCcw, FiUser, FiLink } from 'react-icons/fi';
 import { Button } from '@/components/ui/button';
 import { Label } from '../ui/label';
-import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { ConfirmDialog } from '@/components/dialogs/confirm-dialog';
 import type { Item } from '@/api/items';
 import { detectSource } from '@/utils/detectSource'; // Import detectSource
 import type { Sink } from '@/api/sinks';

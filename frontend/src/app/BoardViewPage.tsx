@@ -10,7 +10,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import ErrorAlert from '@/components/ui/error-alert';
-import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { ConfirmDialog } from '@/components/dialogs/confirm-dialog';
+import EditSinkDialog from '@/components/sinks/EditSinkDialog';
+import { updateSink } from '@/api/sinks';
+import { toast } from 'sonner';
 
 export default function BoardViewPage() {
   const { sinkID } = useParams<{ sinkID: string }>();
@@ -65,7 +68,7 @@ export default function BoardViewPage() {
         </p>
         <div className="flex gap-2 items-center text-md text-foreground">
           <Avatar>
-            <AvatarImage src={userData?.avatar_url} />
+            <AvatarImage src={userData?.avatar_url} className="border-muted" />
             <AvatarFallback>XX</AvatarFallback>
           </Avatar>
           {userData?.username}
@@ -78,18 +81,46 @@ export default function BoardViewPage() {
           ))}
         </div>
 
-        <div className="flex justify-between w-full">
-          <div className="flex max-w-28 items-center justify-center gap-2 text-sm text-muted-foreground py-1 px-4 rounded-2xl border border-accent-foreground/25 bg-accent/50">
-            <FiEye />
-            {sink?.visibility}
+        <div className="flex items-center justify-between w-full gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground py-1 px-3 rounded-2xl border border-accent-foreground/25 bg-accent/50">
+              <FiEye />
+              <span className="capitalize">{sink?.visibility}</span>
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center">
+
+          <div className="flex items-center gap-2">
+            <EditSinkDialog
+              sink={sink as Sink}
+              trigger={
+                <Button variant="outline" size="sm">
+                  Edit
+                </Button>
+              }
+              onSave={async updated => {
+                try {
+                  await updateSink(sink?._id || '', updated);
+                  toast.success('Sink updated');
+                  await queryClient.invalidateQueries({ queryKey: ['sink', sink?._id] });
+                } catch (err) {
+                  toast.error('Failed to update sink');
+                  console.error('updateSink error', err);
+                } finally {
+                  await queryClient.invalidateQueries();
+                }
+              }}
+            />
+
             <ConfirmDialog
               title="Delete this sink?"
               description="This will permanently delete the sink and its items. This action cannot be undone."
               confirmText="Delete Sink"
               variant="destructive"
-              trigger={<Button variant="destructive">Delete Sink</Button>}
+              trigger={
+                <Button variant="destructive" size="sm">
+                  Delete
+                </Button>
+              }
               onConfirm={async () => {
                 if (!sink?._id) return;
                 await deleteSink(sink._id);

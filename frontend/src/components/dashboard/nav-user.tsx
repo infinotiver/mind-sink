@@ -3,7 +3,7 @@
 import { TbUser, TbLogout, TbBrandGithub, TbChevronDown } from 'react-icons/tb';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { ConfirmDialog } from '@/components/dialogs/confirm-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,

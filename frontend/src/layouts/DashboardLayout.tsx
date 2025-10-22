@@ -13,7 +13,7 @@ import { getUserSinks } from "@/api/sinks";
 import type { Sink } from "@/api/sinks";
 import Loading from "@/components/ui/loading";
 import ErrorAlert from "@/components/ui/error-alert";
-
+import { Toaster } from '@/components/ui/sonner';
 export default function DashboardLayout() {
   const { user } = useAuth();
   const { data, isLoading, error } = useQuery<Sink[]>({
@@ -39,12 +39,12 @@ export default function DashboardLayout() {
           data={{
             user: {
               id: user?.user_id || 10000,
-              name: user?.username || "Unknown User",
-              email: user ? "Discord Login" : "Unknown login method",
-              avatar: user?.avatar_url || "",
+              name: user?.username || 'Unknown User',
+              email: user ? 'Discord Login' : 'Unknown login method',
+              avatar: user?.avatar_url || '',
             },
             projects:
-              data?.map((sink) => ({
+              data?.map(sink => ({
                 name: sink.title,
                 url: `/dashboard/sink/${sink._id}`,
               })) || [],
@@ -64,6 +64,7 @@ export default function DashboardLayout() {
           <ModeToggle />
         </div>
       </SidebarProvider>
+      <Toaster />
     </>
   );
 }

@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import ErrorAlert from '@/components/ui/error-alert';
 import { Separator } from '@/components/ui/separator';
-import { ShareDialog } from '@/components/ui/share-dialog';
+import { ShareDialog } from '@/components/dialogs/share-dialog';
+import UserSinksGrid from '@/components/sinks/UserSinksGrid';
 
 export default function ProfilePage() {
   const { userID } = useParams<{ userID: string }>();
@@ -67,6 +68,11 @@ export default function ProfilePage() {
           All accounts are public by default.
         </p>
       </div>
+      {/* User's sinks */}
+      <div className="w-full mt-8">
+        <UserSinksGrid userId={profile.user_id} /> {/* Updated to use UserSinksGrid */}
+      </div>
     </div>
   );
 }
+
