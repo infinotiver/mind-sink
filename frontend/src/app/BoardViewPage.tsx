@@ -93,7 +93,7 @@ export default function BoardViewPage() {
             <EditSinkDialog
               sink={sink as Sink}
               trigger={
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" shortcut="Ctrl+E">
                   Edit
                 </Button>
               }
@@ -117,7 +117,7 @@ export default function BoardViewPage() {
               confirmText="Delete Sink"
               variant="destructive"
               trigger={
-                <Button variant="destructive" size="sm">
+                <Button variant="destructive" size="sm" shortcut="Ctrl+Delete">
                   Delete
                 </Button>
               }

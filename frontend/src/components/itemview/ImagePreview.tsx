@@ -31,7 +31,13 @@ function ImagePreview({ item }: { item: Item }) {
         className="rounded-lg shadow-lg object-contain max-h-[60vh] max-w-full"
       />
       <div className="absolute top-4 right-4 flex items-center gap-2 p-2 rounded-lg bg-accent/50 backdrop-blur-md border border-accent-foreground/25">
-        <Button size="icon" variant="outline" aria-label="Download" onClick={handleDownload}>
+        <Button
+          size="icon"
+          variant="outline"
+          aria-label="Download"
+          onClick={handleDownload}
+          shortcut="Ctrl+D"
+        >
           <FiDownload size={18} />
         </Button>
         <ShareDialog
@@ -39,7 +45,7 @@ function ImagePreview({ item }: { item: Item }) {
           description="Share this image with anyone. They'll be able to view it if they have access."
           url={shareUrl}
           trigger={
-            <Button size="icon" variant="outline" aria-label="Share">
+            <Button size="icon" variant="outline" aria-label="Share" shortcut="Ctrl+S">
               <FiShare2 size={18} />
             </Button>
           }

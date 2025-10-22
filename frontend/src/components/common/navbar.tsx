@@ -5,12 +5,13 @@ import {
   // NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu';
 
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthProvider";
-import { FiMenu } from "react-icons/fi";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/context/AuthProvider';
+import { FiMenu } from 'react-icons/fi';
+
 import {
   Sheet,
   SheetContent,
@@ -18,11 +19,13 @@ import {
   SheetTitle,
   SheetTrigger,
   SheetClose,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet';
 
 export default function Navbar() {
   const { user } = useAuth();
   const isLoggedIn = !!user;
+
+  // no-op: keyboard registrations handled elsewhere
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex items-center w-[95%] max-w-4xl md:w-auto p-2 px-3 py-2 shadow-md rounded-2xl border bg-accent/20 md:bg-accent/70 backdrop-blur-lg">
       {/* Mobile: hamburger left + auth button right */}
@@ -36,11 +39,7 @@ export default function Navbar() {
           <SheetContent side="left" className="p-0">
             <SheetHeader className="p-4 pb-2">
               <div className="flex items-center gap-2">
-                <img
-                  src="/ms.png"
-                  alt="Logo"
-                  className="h-8 w-8 rounded-full"
-                />
+                <img src="/ms.png" alt="Logo" className="h-8 w-8 rounded-full" />
                 <SheetTitle>Mind Sink</SheetTitle>
               </div>
             </SheetHeader>
@@ -72,9 +71,9 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
-        <Link to={isLoggedIn ? "/dashboard" : "/login"}>
+        <Link to={isLoggedIn ? '/dashboard' : '/login'}>
           <Button className="rounded-lg px-3" variant="default">
-            {isLoggedIn ? "Open Dashboard" : "Login"}
+            {isLoggedIn ? 'Open Dashboard' : 'Login'}
           </Button>
         </Link>
       </div>
@@ -115,11 +114,11 @@ export default function Navbar() {
             </NavigationMenuItem>
             <NavigationMenuItem asChild>
               <Link
-                to={isLoggedIn ? "/dashboard" : "/login"}
+                to={isLoggedIn ? '/dashboard' : '/login'}
                 className="hover:bg-primary/10 hover:text-primary transition-colors duration-200"
               >
                 <Button className="rounded-lg px-2" variant="default">
-                  {isLoggedIn ? "Open Dashboard" : "Login"}
+                  {isLoggedIn ? 'Open Dashboard' : 'Login'}
                 </Button>
               </Link>
             </NavigationMenuItem>

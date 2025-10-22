@@ -1,5 +1,5 @@
 from .database import boards_collection, items_collection, users_collection
-from .models import SinkModel, SinkCreate, ItemCreate, ItemModel
+from .models import SinkModel, SinkCreate, ItemCreate, ItemModel, SinkUpdate
 from bson import ObjectId
 from typing import List
 from textblob import TextBlob
@@ -130,18 +130,25 @@ async def check_sink_belongs_to_user(sink_id: str, user_id: str) -> bool:
     return sink is not None
 
 
-async def update_sink(sink_id: str, user_id: str, update_data: dict) -> SinkModel:
+async def update_sink(sink_id: str, user_id: str, update_data: SinkUpdate) -> SinkModel:
     # Ensure the sink belongs to the user
     if not await check_sink_belongs_to_user(sink_id, user_id):
         raise ValueError("Sink does not belong to the user.")
 
+    # Convert the SinkUpdate into a dict excluding unset fields
+    update_dict = update_data.model_dump(exclude_unset=True)
+    if not update_dict:
+        raise ValueError("No update fields provided.")
+
     # Update the sink
     result = await boards_collection.update_one(
-        {"_id": ObjectId(sink_id), "user_id": user_id}, {"$set": update_data}
+        {"_id": ObjectId(sink_id), "user_id": user_id}, {"$set": update_dict}
     )
 
     if result.modified_count == 0:
-        raise ValueError("Failed to update the sink.")
+        # It's possible the update didn't change anything; still return the current document
+        # but raise if the document could not be found.
+        pass
 
     updated_sink = await boards_collection.find_one(
         {"_id": ObjectId(sink_id), "user_id": user_id}

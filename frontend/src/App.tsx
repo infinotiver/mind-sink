@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthProvider';
 import AuthCallbackPage from './app/AuthCallbackPage';
 import ManifestoPage from './app/ManifestoPage';
+import { ShortcutsProvider } from './components/shortcuts/ShortcutsProvider';
 
 function App() {
   const queryClient = new QueryClient();
@@ -56,7 +57,9 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <RouterProvider router={router} />
+          <ShortcutsProvider>
+            <RouterProvider router={router} />
+          </ShortcutsProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>

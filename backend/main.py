@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-from backend.models import SinkModel, SinkCreate, ItemCreate, ItemModel
+from backend.models import SinkModel, SinkCreate, SinkUpdate, ItemCreate, ItemModel
 from backend.crud import (
     create_board,
     get_boards,
@@ -126,11 +126,11 @@ async def api_update_item(
 
 @app.put("/sinks/{board_id}", response_model=SinkModel)
 async def api_update_sink(
-    board_id: str, board: dict, user_id: str = Depends(get_current_user_id)
+    board_id: str, board: SinkUpdate, user_id: str = Depends(get_current_user_id)
 ):
     try:
-        # board can be a dict with optional keys: title, description, visibility, tags
-        updated_board = await update_sink(board_id, board, user_id)
+        # board is a SinkUpdate model with optional fields
+        updated_board = await update_sink(board_id, user_id, board)
         if not updated_board:
             raise HTTPException(status_code=404, detail="Board not found")
         return updated_board
