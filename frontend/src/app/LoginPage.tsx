@@ -53,7 +53,7 @@ export default function LoginPage() {
             disabled
           >
             <TbBrandGithub />
-            Login withGitHub
+            Login with GitHub
           </Button>
         </div>
       </div>
