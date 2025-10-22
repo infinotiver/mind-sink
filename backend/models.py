@@ -121,7 +121,7 @@ class SinkUpdate(BaseModel):
     tags: Optional[List[str]] = None
 
     @field_validator("title")
-    def title_not_empty(cls, v: Any, info: ValidationInfo) -> Any:
+    def title_not_empty(self, v: Any, info: ValidationInfo) -> Any:
         if v is not None and not v.strip():
             raise ValueError("title cannot be empty or whitespace")
         return v
