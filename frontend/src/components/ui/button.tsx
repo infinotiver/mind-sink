@@ -54,9 +54,13 @@ function Button({
   }) {
   const Comp = asChild ? Slot : 'button';
 
+  function transformShortcutLabel(part: string): string {
+    return part === 'Ctrl' ? 'Ctrl / ⌘' : part;
+  }
+
   const renderKbd = (s: string) =>
     s.split('+').map((part, idx) => {
-      const label = part === 'Ctrl' ? 'Ctrl / ⌘' : part;
+      const label = transformShortcutLabel(part);
       return (
         <Kbd key={idx} className={idx === 0 ? 'mr-1' : ''}>
           {label}
