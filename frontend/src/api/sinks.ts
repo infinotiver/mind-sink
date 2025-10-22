@@ -1,15 +1,14 @@
-import apiClient from "./apiClient";
+import apiClient from './apiClient';
 // import { useMutation } from "@tanstack/react-query";
 
 export interface Sink {
-    _id: string,
-    title: string,
-    description: string,
-    user_id: string,
-    created_at: string,
-    visibility: string,
-    tags: string[]
-  
+  _id: string;
+  title: string;
+  description: string;
+  user_id: string;
+  created_at: string;
+  visibility: string;
+  tags: string[];
 }
 
 // ALL SINKS
@@ -35,7 +34,7 @@ export async function getSink(sinkId: string) {
 }
 // CREATE SINK
 
-export async function createSink(newSink: Omit<Sink, "_id" | "created_at">) {
+export async function createSink(newSink: Omit<Sink, '_id' | 'created_at'>) {
   const res = await apiClient.post(`/sinks`, newSink);
   return res.data;
 }
@@ -43,5 +42,14 @@ export async function createSink(newSink: Omit<Sink, "_id" | "created_at">) {
 
 export async function deleteSink(sinkId: string) {
   const res = await apiClient.delete(`/sinks/${sinkId}`);
+  return res.data;
+}
+
+// UPDATE SINK
+export async function updateSink(
+  sinkId: string,
+  update: Partial<Omit<Sink, '_id' | 'created_at' | 'user_id'>>
+) {
+  const res = await apiClient.put(`/sinks/${sinkId}`, update);
   return res.data;
 }
