@@ -1,196 +1,112 @@
-import { useRef, useLayoutEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from '@/components/common/navbar';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup, ButtonGroupSeparator } from '@/components/ui/button-group';
-import { Separator } from '@/components/ui/separator';
-// import DevStatePanel from "@/components/common/DevStatsPanel";
 import { ModeToggle } from '@/components/mode-toggle';
 import { Link } from 'react-router-dom';
-import { FaChevronRight } from 'react-icons/fa';
+import ColorBends from '@/components/ColorBends';
+import CircularGallery from '@/components/CircularGallery';
 
 export default function HomePage() {
-  const scrollRef = useRef(null);
-  const { scrollY } = useScroll();
-
-  const [vh, setVh] = useState(1000);
-  useLayoutEffect(() => {
-    setVh(window.innerHeight);
-  }, []);
-
-  const clipPath = useTransform(
-    scrollY,
-    [0, vh * 0.6],
-    ['circle(100% at center)', 'circle(0% at center)']
-  );
-  const overlayOpacity = useTransform(scrollY, [0, vh * 0.6], [1, 0]);
-
-  const bgOpacity = useTransform(scrollY, [vh * 0.55, vh], [0, 1]);
-  const bgScale = useTransform(scrollY, [vh * 0.55, vh], [1.05, 1]);
-  // only profile and item previews now; dashboard is shown as hero image
-  const [preview, setPreview] = useState<'profile' | 'item'>('profile');
-
+  const galleryItems: Array<{ image: string; text: string }> = [
+    {
+      image: 'https://cdn.cosmos.so/a809f001-191c-402f-ba04-4e7ce29a0255?format=jpeg',
+      text: 'The North American XB-70A',
+    },
+    {
+      image: 'https://cdn.cosmos.so/10a65136-ee1e-42a8-965d-2556d8b43e3e?format=jpeg',
+      text: 'Divers in Sicily',
+    },
+    {
+      image: 'https://cdn.cosmos.so/a1014620-5489-4041-91e1-4c3346d83aca?format=jpeg',
+      text: 'Desk Setup',
+    },
+    {
+      image: 'https://cdn.cosmos.so/a50a4847-8a43-4cfe-8487-b2e264b9d40b?format=jpeg',
+      text: 'Numbers',
+    },
+    {
+      image: 'https://cdn.cosmos.so/d47f004b-7db7-4549-8fc2-5b8331d68da7?format=jpeg',
+      text: 'Poster',
+    },
+  ];
   return (
-    <div ref={scrollRef} className="relative bg-background">
-      {/* Overlay */}
-      <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-white"
-        style={{ clipPath, opacity: overlayOpacity }}
-      >
-        <h1 className="text-center text-3xl sm:text-5xl font-medium text-black px-4 leading-20">
-          Don’t let your thoughts get <span className="font-lora italic">lost</span>
-        </h1>
-      </motion.div>
+    <div className="relative min-h-screen overflow-hidden bg-transparent flex flex-col">
+      {/* Fullscreen animated background (ColorBends) */}
+      <div className="absolute inset-0 -z-10 w-full h-full pointer-events-none" aria-hidden="true">
+        <ColorBends
+          className="w-full h-full opacity-90"
+          colors={['#1f025dff', '#8a5cff', '#01496dff']}
+          rotation={0}
+          speed={0.12}
+          scale={1.18}
+          frequency={1.5}
+          warpStrength={1.1}
+          mouseInfluence={0.8}
+          parallax={0.6}
+          noise={1}
+        />
+      </div>
 
-      {/* Spacer to push main content down so it's fully visible after overlay */}
-      <div style={{ height: vh }} />
-
-      {/* Main content */}
-      <motion.div style={{ opacity: bgOpacity, scale: bgScale }}>
+      {/* Transparent navbar so ColorBends shows through */}
+      <header className="relative z-20 bg-transparent">
         <Navbar />
-        <div className="flex flex-col items-center justify-center text-center gap-y-4 min-h-screen px-4 sm:px-8">
-          <h2 className="text-[min(12vw,44px)] sm:text-[min(10vw,64px)] md:text-[min(8vw,84px)] font-semibold mt-6 sm:mt-8 mb-2 sm:mb-4 flex items-center justify-center gap-3 md:gap-4 leading-tight">
-            Let your thoughts <span className="text-foreground">sink</span>
-          </h2>
-          <div className="sm:px-8 text-sm sm:text-base md:text-lg text-foreground md:max-w-[60vw] leading-snug sm:leading-normal font-medium">
-            Mind Sink is
-            <span className="chip">ad-free</span>,<span className="chip">distraction-less</span>,
-            <span className="chip">Pinterest-like</span>
-            simple image and inspiration organizer with
-            <span className="chip">no infinite scroll</span>
-            so you focus on what matters
-          </div>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 w-full">
-            <Link to={'/dashboard'}>
-              <Button
-          variant="default"
-          size="lg"
-          className="font-semibold group flex items-center justify-center"
-              >
-          Get Started{' '}
-          <FaChevronRight className="size-2.5 text-md group-hover:translate-x-1 transition-transform duration-200" />
-              </Button>
-            </Link>
-            <a href="https://github.com/infinotiver/mind-sink">
-              <Button variant="outline" size="lg" className="font-semibold">
-          Learn More
-              </Button>
-            </a>
-            <Link to={'/manifesto'}>
-              <Button variant="secondary" size="lg" className="font-semibold">
-          Read Manifesto
-              </Button>
-            </Link>
-          </div>
-          <div className="text-muted-foreground text-xs sm:text-sm font-lora italic leading-tight">
-            The project is still in alpha phase of development. For a list of{' '}
-            <a
-              href="https://github.com/infinotiver/mind-sink/issues"
-              className="text-muted-foreground underline hover:text-blue-600"
+      </header>
+
+      {/* Simple professional hero */}
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 lg:pt-28 lg:pb-20">
+        <h1 className="text-5xl sm:text-6xl md:text-[4.5rem] font-bold leading-[0.9] tracking-tight max-w-3xl">
+          Let your thoughts <span className="text-foreground">sink</span>
+        </h1>
+
+        <p className="mt-4 text-base sm:text-lg text-foreground max-w-2xl">
+          Ad-free, focused image organizer — no infinite scroll.
+        </p>
+
+        <div className="mt-6 flex gap-4 justify-center">
+          <Link to="/dashboard">
+            <Button
+              size="default"
+              className="font-semibold rounded-full px-8 py-3 bg-white text-black shadow-lg"
             >
-              known issues
-            </a>
-            , refer to the GitHub Repo.
-          </div>
+              Get Started
+            </Button>
+          </Link>
+
+          <a href="https://github.com/infinotiver/mind-sink">
+            <Button
+              variant="outline"
+              size="default"
+              className="font-semibold rounded-full px-6 py-3"
+            >
+              Learn More
+            </Button>
+          </a>
         </div>
-        <div className="flex justify-center items-center m-2 md:m-6 lg:m-8">
-          <img
-            src="/dashboard.png"
-            alt="Dashboard Demo"
-            className="rounded-lg shadow-lg max-w-[80vw] h-auto object-contain object-center"
+
+        {/* Circular gallery showcase */}
+        <div
+          style={{ height: '600px', position: 'relative' }}
+          className="w-full max-w-6xl mx-auto mt-12"
+        >
+          <CircularGallery
+            bend={1.5}
+            textColor="#ffffff"
+            borderRadius={0.02}
+            scrollEase={0.02}
+            items={galleryItems}
           />
         </div>
-        <div className="mx-auto max-w-6xl px-4 py-8">
-          {/* preview state */}
-          <div className="flex justify-center mb-4">
-            <ButtonGroup aria-label="Preview selector">
-              <Button
-                onClick={() => setPreview('profile')}
-                variant={preview === 'profile' ? 'default' : 'outline'}
-              >
-                Profile
-              </Button>
-              <ButtonGroupSeparator />
-              <Button
-                onClick={() => setPreview('item')}
-                variant={preview === 'item' ? 'default' : 'outline'}
-              >
-                Item View
-              </Button>
-            </ButtonGroup>
-          </div>
+      </main>
 
-          <div className="relative">
-            {/* subtle blurred background behind preview */}
-            <div className="absolute inset-0 -z-10 flex items-center justify-center">
-              <div className="w-[80%] h-[60%] bg-gradient-to-r from-accent/10 via-transparent to-accent/10 blur-3xl rounded-lg" />
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                <div
-                  className={`lg:col-span-2 ${preview === 'profile' ? 'lg:order-2' : 'lg:order-1'}`}
-                >
-                  <div className="relative w-full rounded-lg overflow-hidden shadow-lg min-h-[56vh]">
-                    <img
-                      src={preview === 'profile' ? '/profile.png' : '/itemview.png'}
-                      alt={preview}
-                      className="absolute inset-0 w-full h-full object-contain"
-                    />
-                  </div>
-                </div>
-                <div
-                  className={`lg:col-span-1 ${preview === 'profile' ? 'lg:order-1' : 'lg:order-2'}`}
-                >
-                  <h3 className="text-2xl font-semibold mb-2">
-                    {preview === 'profile' ? 'Profile' : 'Item View'}
-                  </h3>
-                  <p className="text-base text-muted-foreground">
-                    {preview === 'profile'
-                      ? 'Public profiles showcase your sinks and let others explore your collections. Profiles are simple and shareable.'
-                      : 'Inspect items in detail, add tags, and manage content without leaving the flow.'}
-                  </p>
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    {preview === 'profile'
-                      ? 'Share or copy a profile link easily using the share dialog.'
-                      : 'Item view provides context and tools to update tags or remove items quickly.'}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+      <div className="fixed bottom-4 right-4 z-30">
+        <ModeToggle />
+      </div>
+      {/* Small disclaimer bubble */}
+      <div className="fixed left-4 bottom-6 z-30">
+        <div className="max-w-xs bg-black/50 backdrop-blur-sm text-xs text-white px-3 py-2 rounded-md shadow-md">
+          Images are property of their owners — collected from Pinterest, are.na, workspace.so, and
+          similar services (via cosmos.so).
         </div>
-        <div className="mx-auto max-w-6xl px-4">
-          <Separator className="my-6" />
-        </div>
-
-        <div className="text-xs text-muted-foreground text-center my-4">
-          Built with ❤️ using React, TypeScript, and Framer Motion by{' '}
-          <a
-            href="https://github.com/infinotiver"
-            className="hover:text-accent-foreground underline"
-          >
-            infinotiver
-          </a>
-          .&nbsp;Feel free to{' '}
-          <a
-            href="https://github.com/infinotiver/mind-sink/issues/new"
-            className="hover:text-accent-foreground underline"
-            id="contact"
-          >
-            open an issue on GitHub
-          </a>
-          .
-        </div>
-        <div className="fixed bottom-4 right-4">
-          <ModeToggle />
-        </div>
-        {/* <DevStatePanel /> */}
-      </motion.div>
+      </div>
     </div>
   );
 }
