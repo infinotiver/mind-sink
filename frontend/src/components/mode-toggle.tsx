@@ -80,8 +80,6 @@ export function ModeToggle(): ReactElement {
           </span>
 
           <span className="sr-only">Toggle theme</span>
-          <div className="flex items-center gap-1">
-          </div>
         </Button>
       </DropdownMenuTrigger>
 
