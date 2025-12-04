@@ -104,7 +104,7 @@ export default function HomePage() {
       <footer className="relative z-10 mt-8">
         <div className="mx-auto max-w-4xl px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-xs text-white px-3 py-2 bg-accent/50 rounded-2xl">
-            <span>Made with love by, {" "}
+            <span>Made with love by{" "}
               <a href="https://github.com/infinotiver" target="_blank" rel="noopener noreferrer">
                 <strong>infinotiver</strong>
               </a>
