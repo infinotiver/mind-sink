@@ -114,6 +114,28 @@ class SinkCreate(BaseModel):
         return v
 
 
+class SinkUpdate(BaseModel):
+    title: Optional[str] = Field(None, min_length=1, max_length=100)
+    description: Optional[str] = Field(None, max_length=300)
+    visibility: Optional[str] = Field(None)
+    tags: Optional[List[str]] = None
+
+    @field_validator("title")
+    def title_not_empty(self, v: Any, info: ValidationInfo) -> Any:
+        if v is not None and not v.strip():
+            raise ValueError("title cannot be empty or whitespace")
+        return v
+
+    @field_validator("visibility")
+    def validate_visibility(self, v: Any, info: ValidationInfo) -> Any:
+        if v is None:
+            return v
+        allowed_visibilities = {"private", "public"}
+        if v not in allowed_visibilities:
+            raise ValueError(f"visibility must be one of {allowed_visibilities}")
+        return v
+
+
 class ItemCreate(BaseModel):
     sink_id: str
     content: str = Field(..., min_length=1)

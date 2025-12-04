@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthProvider';
+import { useEffect } from 'react';
+import useShortcuts from '@/components/shortcuts/useShortcuts';
 
 export function NavUser({
   user,
@@ -35,6 +37,21 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const shortcuts = useShortcuts();
+
+  useEffect(() => {
+    const openProfile = () => navigate(`/users/${user.id}`);
+    const doLogout = () => {
+      logout();
+      navigate('/');
+    };
+    shortcuts.register('p', openProfile, 'Open Profile (Ctrl+P)');
+    shortcuts.register('o', doLogout, 'Log out (Ctrl+O)');
+    return () => {
+      shortcuts.unregister('p', openProfile);
+      shortcuts.unregister('o', doLogout);
+    };
+  }, [shortcuts, navigate, logout, user.id]);
 
   return (
     <SidebarMenu>

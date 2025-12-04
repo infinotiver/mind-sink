@@ -16,6 +16,8 @@ import { useAuth } from '@/context/AuthProvider';
 import { createSink } from '@/api/sinks';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import useShortcuts from '@/components/shortcuts/useShortcuts';
 
 export default function CreateActions() {
   const [openCreate, setOpenCreate] = React.useState(false);
@@ -26,6 +28,19 @@ export default function CreateActions() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const shortcuts = useShortcuts();
+
+  useEffect(() => {
+    // register shortcuts
+    const openCreate = () => setOpenCreate(true);
+    const openAdd = () => setOpenAddItem(true);
+    shortcuts.register('c', openCreate, 'Create Sink (Ctrl+C)');
+    shortcuts.register('i', openAdd, 'Add Image (Ctrl+I)');
+    return () => {
+      shortcuts.unregister('c', openCreate);
+      shortcuts.unregister('i', openAdd);
+    };
+  }, [shortcuts]);
 
   const handleAddTag = (tag: string) => {
     if (tag && !tags.includes(tag)) setTags([...tags, tag]);
