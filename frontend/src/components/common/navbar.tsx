@@ -37,7 +37,6 @@ export default function Navbar() {
       className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[80%] max-w-4xl"
     >
       <div className="flex items-center p-1 rounded-2xl">
-        {/* Mobile: hamburger left + auth button right */}
         {/* Mobile: hamburger left, logo center, auth right */}
         <div className="flex w-full items-center justify-between md:hidden">
           <div>
