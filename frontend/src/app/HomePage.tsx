@@ -52,9 +52,9 @@ export default function HomePage() {
       </header>
 
       {/* Simple professional hero */}
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 lg:pt-28 lg:pb-20">
-        <h1 className="text-5xl sm:text-6xl md:text-[4.5rem] font-bold leading-[0.9] tracking-tight max-w-3xl">
-          Let your thoughts <span className="text-foreground">sink</span>
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 py-28 mt-12 lg:pt-28 lg:pb-20">
+        <h1 className="inline-block text-[2.55rem] sm:text-[3.1875rem] md:text-[3.825rem] font-medium leading-[0.9] tracking-tight max-w-3xl origin-center">
+          Don't let your thoughts get lost — let them sink
         </h1>
 
         <p className="mt-4 text-base sm:text-lg text-foreground max-w-2xl">
@@ -101,12 +101,29 @@ export default function HomePage() {
         <ModeToggle />
       </div>
       {/* Small disclaimer bubble */}
-      <div className="fixed left-4 bottom-6 z-30">
-        <div className="max-w-xs bg-black/50 backdrop-blur-sm text-xs text-white px-3 py-2 rounded-md shadow-md">
-          Images are property of their owners — collected from Pinterest, are.na, workspace.so, and
-          similar services (via cosmos.so).
+      <footer className="relative z-10 mt-8">
+        <div className="mx-auto max-w-4xl px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-xs text-white px-3 py-2 bg-accent/50 rounded-2xl">
+            <span>Made with love by, {" "}
+              <a href="https://github.com/infinotiver" target="_blank" rel="noopener noreferrer">
+                <strong>infinotiver</strong>
+              </a>
+            </span>
+          </div>
+          <span className="text-neutral-300">•</span>
+          <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm text-xs text-white px-3 py-2 rounded-md shadow-md">
+            <span>Images are property of their respective owners — collected via cosmos.so</span>
+          </div>
+
+          <div>
+            <Link to="/dashboard">
+              <Button size="default" className="font-semibold rounded-full px-6 py-2">
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
