@@ -127,7 +127,7 @@ class SinkUpdate(BaseModel):
         return v
 
     @field_validator("visibility")
-    def validate_visibility(cls, v: Any, info: ValidationInfo) -> Any:
+    def validate_visibility(self, v: Any, info: ValidationInfo) -> Any:
         if v is None:
             return v
         allowed_visibilities = {"private", "public"}
