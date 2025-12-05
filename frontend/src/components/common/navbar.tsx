@@ -35,39 +35,29 @@ export default function Navbar() {
       className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[80%] max-w-4xl"
     >
       <div className="flex items-center p-1 rounded-2xl">
-        {/* Mobile: hamburger left, logo center, auth right */}
-        <div className="flex w-full items-center md:hidden relative">
-          <div className="flex-1 flex justify-start">
-            <StaggeredMenu
-              position="right"
-              items={menuItems}
-              socialItems={socialItems}
-              isFixed={true}
-              displaySocials={true}
-              displayItemNumbering={true}
-              menuButtonColor="#fff"
-              openMenuButtonColor="#fff"
-              changeMenuColorOnOpen={true}
-              colors={['#B19EEF', '#5227FF']}
-              accentColor="#ff6b6b"
-              onMenuOpen={() => console.log('Menu opened')}
-              onMenuClose={() => console.log('Menu closed')}
-            />
-          </div>
-
-          <Link to="/" className="absolute left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-accent/90">
-              <img src="/ms.png" alt="Logo" className="h-7 w-7 rounded-full" />
-            </div>
+        {/* Mobile: login button left, menu button right */}
+        <div className="flex w-full items-center justify-between md:hidden">
+          <Link to={isLoggedIn ? '/dashboard' : '/login'}>
+            <Button className="rounded-full px-3 py-2" variant="default">
+              {isLoggedIn ? 'Open' : 'Login'}
+            </Button>
           </Link>
 
-          <div className="flex-1 flex justify-end">
-            <Link to={isLoggedIn ? '/dashboard' : '/login'}>
-              <Button className="rounded-full px-3 py-2" variant="default">
-                {isLoggedIn ? 'Open' : 'Login'}
-              </Button>
-            </Link>
-          </div>
+          <StaggeredMenu
+            position="right"
+            items={menuItems}
+            socialItems={socialItems}
+            isFixed={true}
+            displaySocials={true}
+            displayItemNumbering={true}
+            menuButtonColor="#fff"
+            openMenuButtonColor="#fff"
+            changeMenuColorOnOpen={true}
+            colors={['#B19EEF', '#5227FF']}
+            accentColor="#ff6b6b"
+            onMenuOpen={() => console.log('Menu opened')}
+            onMenuClose={() => console.log('Menu closed')}
+          />
         </div>
 
         {/* Desktop: left links + centered logo + right auth button */}
